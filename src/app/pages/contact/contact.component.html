@@ -1,0 +1,51 @@
+<section class="contact">
+  <h2>{{ "CONTACT" | translate }}</h2>
+
+  <form data-aos="fade-up" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+    <label>
+      {{ "NAME" | translate }}
+      <input formControlName="name" (blur)="f.name.markAsTouched()" />
+      <span *ngIf="f.name.touched && f.name.invalid">
+        {{ "REQUIRED" | translate }}
+      </span>
+    </label>
+
+    <label>
+      {{ "EMAIL" | translate }}
+      <input
+        formControlName="email"
+        type="email"
+        (blur)="f.email.markAsTouched()"
+      />
+      <span *ngIf="f.email.touched && f.email.invalid">
+        {{ f.email.errors?.['email'] ? ('EMAIL_INVALID' | translate) : ('REQUIRED' | translate) }}
+      </span>
+    </label>
+
+    <label>
+      {{ "MESSAGE" | translate }}
+      <textarea
+        formControlName="message"
+        rows="5"
+        (blur)="f.message.markAsTouched()"
+      ></textarea>
+      <span *ngIf="f.message.touched && f.message.invalid">
+        {{ "MESSAGE_TOO_SHORT" | translate }}
+      </span>
+    </label>
+
+    <label class="privacy">
+      <input type="checkbox" formControlName="privacy" />
+      {{ "PRIVACY_TEXT" | translate }}
+    </label>
+
+    <button type="submit" [disabled]="contactForm.invalid">
+      {{ "SEND" | translate }}
+    </button>
+    <input type="text" formControlName="honeypot" style="display: none" />
+
+    <div class="feedback" *ngIf="submitted">
+      {{ "MESSAGE_SENT" | translate }}
+    </div>
+  </form>
+</section>

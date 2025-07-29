@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0f172a;
+  color: var(--text);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav a {
+  margin-right: 1rem;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.nav a.active,
+.nav a:hover {
+  color: var(--primary);
+}
+
+.lang-switch button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+  margin-left: 0.5rem;
+  transition: color 0.2s;
+}
+
+.lang-switch button:hover {
+  color: var(--primary);
+}

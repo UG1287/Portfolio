@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #00ff91;
+  --accent: #a855f7;
+  --background: #0f172a;
+  --text: #f1f5f9;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}

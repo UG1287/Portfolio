@@ -1,0 +1,16 @@
+<section class="projects">
+  <h2>{{ 'PROJECTS' | translate }}</h2>
+
+  <div class="projects-grid">
+    <div data-aos="fade-up" class="project-card" *ngFor="let project of projects">
+      <img [src]="project.image" [alt]="project.title" />
+      <h3>{{ project.title }}</h3>
+      <p>{{ project.descriptionKey | translate }}</p>
+
+      <div class="project-links">
+        <a [href]="project.liveLink" target="_blank" rel="noopener">{{ 'LIVE_DEMO' | translate }}</a>
+        <a [href]="project.repoLink" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>

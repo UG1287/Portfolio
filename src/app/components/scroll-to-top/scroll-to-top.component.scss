@@ -1,0 +1,26 @@
+.scroll-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary);
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #00cc74;
+  }
+}
+
+@media (min-width: 768px) {
+  .scroll-btn {
+    display: none;
+  }
+}

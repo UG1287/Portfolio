@@ -1,14 +1,60 @@
 <header class="header">
-  <nav class="nav">
-    <a routerLink="/" routerLinkActive="active">{{ 'HOME' | translate }}</a>
-    <a routerLink="/about" routerLinkActive="active">{{ 'ABOUT_ME' | translate }}</a>
-    <a routerLink="/skills" routerLinkActive="active">{{ 'SKILLS' | translate }}</a>
-    <a routerLink="/projects" routerLinkActive="active">{{ 'PROJECTS' | translate }}</a>
-    <a routerLink="/contact" routerLinkActive="active">{{ 'CONTACT' | translate }}</a>
-  </nav>
+ <a href="#hero" (click)="navigate($event, 'hero')">
+  <app-logo></app-logo>
+</a>
 
-  <div class="lang-switch">
-    <button (click)="switchLang('de')">🇩🇪</button>
-    <button (click)="switchLang('en')">🇬🇧</button>
+  <div class="right-group">
+    <nav class="nav" [class.open]="isMenuOpen">
+      <a
+        href="#about"
+        (click)="navigate($event, 'about')"
+        [class.active]="activeSection === 'about'"
+      >
+        {{ "ABOUT_ME" | translate }}
+      </a>
+      <a
+        href="#skills"
+        (click)="navigate($event, 'skills')"
+        [class.active]="activeSection === 'skills'"
+      >
+        {{ "SKILLS" | translate }}
+      </a>
+      <a
+        href="#projects"
+        (click)="navigate($event, 'projects')"
+        [class.active]="activeSection === 'projects'"
+      >
+        {{ "PROJECTS" | translate }}
+      </a>
+      <a
+        href="#contact"
+        (click)="navigate($event, 'contact')"
+        [class.active]="activeSection === 'contact'"
+      >
+        {{ "CONTACT" | translate }}
+      </a>
+    </nav>
+
+    <div class="lang-switch">
+      <button
+        class="lang-btn"
+        [class.active]="currentLang === 'de'"
+        (click)="switchLang('de')"
+      >
+        DE
+      </button>
+      <button
+        class="lang-btn"
+        [class.active]="currentLang === 'en'"
+        (click)="switchLang('en')"
+      >
+        EN
+      </button>
+    </div>
+
+    <!-- Burger Icon -->
+    <div class="burger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </header>

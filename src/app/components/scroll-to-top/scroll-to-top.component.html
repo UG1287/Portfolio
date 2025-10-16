@@ -1,1 +1,31 @@
-<button class="scroll-btn" *ngIf="showButton" (click)="scrollToTop()">↑</button>
+<div class="scroll-wrap">
+  <button
+    class="scroll-btn"
+    *ngIf="showButton"
+    (click)="scrollToTop()"
+    aria-label="Scroll to top"
+  >
+    <svg
+      class="arrow-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="circle"
+        cx="12"
+        cy="12"
+        r="11"
+        stroke-width="1.5"
+        fill="none"
+      />
+      <path
+        class="arrow"
+        d="M12 16V8M8 12l4-4 4 4"
+        stroke-width="1.5"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>

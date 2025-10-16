@@ -1,51 +1,114 @@
-<section class="contact">
-  <h2>{{ "CONTACT" | translate }}</h2>
+<section class="contact" id="contact">
+  <!-- optionaler lila Glow -->
+  <img class="contact__glow" src="assets/shadows/Purpleshadow4.svg" alt="" aria-hidden="true" />
 
-  <form data-aos="fade-up" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
-    <label>
-      {{ "NAME" | translate }}
-      <input formControlName="name" (blur)="f.name.markAsTouched()" />
-      <span *ngIf="f.name.touched && f.name.invalid">
-        {{ "REQUIRED" | translate }}
-      </span>
-    </label>
+  <div class="contact__inner">
+    <!-- Headline über beide Spalten -->
+    <h2 class="contact__title">{{ 'CONTACT' | translate }}</h2>
 
-    <label>
-      {{ "EMAIL" | translate }}
-      <input
-        formControlName="email"
-        type="email"
-        (blur)="f.email.markAsTouched()"
-      />
-      <span *ngIf="f.email.touched && f.email.invalid">
-        {{ f.email.errors?.['email'] ? ('EMAIL_INVALID' | translate) : ('REQUIRED' | translate) }}
-      </span>
-    </label>
-
-    <label>
-      {{ "MESSAGE" | translate }}
-      <textarea
-        formControlName="message"
-        rows="5"
-        (blur)="f.message.markAsTouched()"
-      ></textarea>
-      <span *ngIf="f.message.touched && f.message.invalid">
-        {{ "MESSAGE_TOO_SHORT" | translate }}
-      </span>
-    </label>
-
-    <label class="privacy">
-      <input type="checkbox" formControlName="privacy" />
-      {{ "PRIVACY_TEXT" | translate }}
-    </label>
-
-    <button type="submit" [disabled]="contactForm.invalid">
-      {{ "SEND" | translate }}
-    </button>
-    <input type="text" formControlName="honeypot" style="display: none" />
-
-    <div class="feedback" *ngIf="submitted">
-      {{ "MESSAGE_SENT" | translate }}
+    <!-- LINKE SPALTE: Copy -->
+    <div class="contact__copy" data-aos="fade-right">
+      <p class="contact__eyebrow">{{ 'GOT_A_PROBLEM' | translate }}</p>
+      <p class="contact__lead">{{ 'CONTACT_LEAD' | translate }}</p>
+      <p class="contact__note" [innerHTML]="'CONTACT_NOTE' | translate"></p>
     </div>
-  </form>
+
+    <!-- RECHTE SPALTE: Formular -->
+    <form
+      class="contact__form"
+      [formGroup]="contactForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      data-aos="fade-left"
+    >
+      <!-- NAME -->
+      <div class="field" [class.has-error]="f.name.touched && f.name.invalid">
+        <label class="vh" for="contactName">{{ 'NAME' | translate }}</label>
+        <input
+          id="contactName"
+          class="contact__input"
+          formControlName="name"
+          [attr.placeholder]="'NAME' | translate"
+          (blur)="f.name.markAsTouched()"
+          [attr.aria-invalid]="f.name.touched && f.name.invalid"
+        />
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="f.name.touched && f.name.invalid">
+          {{ 'REQUIRED' | translate }}
+        </span>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="field" [class.has-error]="f.email.touched && f.email.invalid">
+        <label class="vh" for="contactEmail">{{ 'EMAIL' | translate }}</label>
+        <input
+          id="contactEmail"
+          class="contact__input"
+          type="email"
+          formControlName="email"
+          [attr.placeholder]="'EMAIL' | translate"
+          (blur)="f.email.markAsTouched()"
+          [attr.aria-invalid]="f.email.touched && f.email.invalid"
+        />
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="f.email.touched && f.email.invalid">
+          {{
+            f.email.errors?.['email']
+              ? ('EMAIL_INVALID' | translate)
+              : ('REQUIRED' | translate)
+          }}
+        </span>
+      </div>
+
+      <!-- MESSAGE -->
+      <div class="field" [class.has-error]="f.message.touched && f.message.invalid">
+        <label class="vh" for="contactMessage">{{ 'MESSAGE' | translate }}</label>
+        <textarea
+          id="contactMessage"
+          class="contact__textarea"
+          rows="7"
+          formControlName="message"
+          [attr.placeholder]="'MESSAGE' | translate"
+          (blur)="f.message.markAsTouched()"
+          [attr.aria-invalid]="f.message.touched && f.message.invalid"
+        ></textarea>
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="f.message.touched && f.message.invalid">
+          {{ 'MESSAGE_TOO_SHORT' | translate }}
+        </span>
+      </div>
+
+      <!-- PRIVACY -->
+      <div class="field field--privacy" [class.has-error]="f.privacy.touched && f.privacy.invalid">
+        <label class="contact__privacy">
+          <input type="checkbox" formControlName="privacy" (blur)="f.privacy.markAsTouched()" />
+          <span [innerHTML]="'PRIVACY_TEXT' | translate"></span>
+        </label>
+        <span class="field-msg" *ngIf="f.privacy.touched && f.privacy.invalid">
+          {{ 'PRIVACY_REQUIRED' | translate }}
+        </span>
+      </div>
+
+      <!-- SUBMIT -->
+      <button
+        type="submit"
+        class="contact__submit"
+        [disabled]="contactForm.invalid || sending"
+      >
+        <ng-container *ngIf="!sending">{{ 'SEND' | translate }}</ng-container>
+        <ng-container *ngIf="sending">{{ 'SENDING' | translate }}</ng-container>
+      </button>
+
+      <!-- Honeypot -->
+      <input type="text" formControlName="honeypot" style="display:none" />
+
+      <!-- Feedback -->
+      <div class="feedback success" *ngIf="submitted && !errorMessage">
+        {{ 'MESSAGE_SENT' | translate }}
+      </div>
+      <div class="feedback error" *ngIf="!!errorMessage">
+        {{ 'MESSAGE_ERROR' | translate }}
+      </div>
+    </form>
+  </div>
 </section>

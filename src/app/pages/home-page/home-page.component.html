@@ -1,10 +1,74 @@
-<section class="hero">
-  <div class="hero-content">
-    <h1 data-aos="fade-down">Ugursay Pürcek</h1>
-    <h2 data-aos="fade-up">{{ 'DEVELOPER_TITLE' | translate }}</h2>
+<section class="hero" id="hero">
+  <div class="hero-container">
+    <!-- Linke Spalte: Bild -->
+    <div class="hero-image" data-aos="fade-right">
+      <!-- Kombinierter Schatten -->
+      <img
+        class="shadow"
+        src="assets/shadows/photoshadows.svg"
+        alt=""
+        aria-hidden="true"
+      />
 
-    <a data-aos="zoom-in" routerLink="/about" class="cta-btn">
-      {{ 'LEARN_MORE' | translate }}
-    </a>
+      <!-- Portrait -->
+      <img
+        class="portrait"
+        ngSrc="assets/img/UgursayohneHintergrund.png"
+        alt="Porträt von Uğursay Pürçek"
+        width="646"
+        height="705"
+        priority
+        decoding="async"
+      />
+    </div>
+
+    <!-- Rechte Spalte: Text -->
+    <div class="hero-text" data-aos="fade-left">
+      <span class="vertical-text">I am</span>
+      <h1><strong>Uğursay</strong> Pürçek</h1>
+      <h2>{{ "DEVELOPER_TITLE" | translate }}</h2>
+
+      <a
+        href="#contact"
+        (click)="scrollToSection($event, 'contact')"
+        class="cta-btn"
+      >
+        {{ "CONTACT" | translate }}
+      </a>
+    </div>
   </div>
+
+  <!-- Curved Hero Wave (dekorativ) -->
+<img src="assets/shadows/Vectorcurvedhero.svg" alt="" class="hero-wave">
+
+
+  <!-- Scroll Down Hinweis -->
+  <div class="scroll-down" data-aos="fade-up">
+    <span>Scroll down</span>
+    <img
+      src="assets/icons/arrow-down-line.svg"
+      alt="Scroll down icon"
+      aria-hidden="true"
+    />
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <app-about />
+</section>
+
+<!-- SKILLS SECTION -->
+<section id="skills">
+  <app-skills />
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projects">
+  <app-projects />
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+  <app-contact />
 </section>

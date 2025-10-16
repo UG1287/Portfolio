@@ -3,34 +3,132 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #0f172a;
+  background-color: var(--background);
   color: var(--text);
   position: sticky;
   top: 0;
-  z-index: 100;
-}
+  z-index: 1000;
 
-.nav a {
-  margin-right: 1rem;
-  color: var(--text);
-  transition: color 0.2s;
-}
+  .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+  }
 
-.nav a.active,
-.nav a:hover {
-  color: var(--primary);
-}
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
 
-.lang-switch button {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: var(--text);
-  margin-left: 0.5rem;
-  transition: color 0.2s;
-}
+    span {
+      width: 25px;
+      height: 3px;
+      background: var(--text);
+      transition: 0.3s;
+    }
 
-.lang-switch button:hover {
-  color: var(--primary);
+    &.open span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+
+    &.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.open span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+  }
+
+  .right-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 400;
+        position: relative;
+        transition: color 0.2s;
+
+        &.active,
+        &:hover {
+          color: var(--primary);
+          font-weight: 600;
+        }
+
+        &.active::after,
+        &:hover::after {
+          content: "";
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 55.5px;
+          height: 2px;
+          background-color: var(--accent);
+        }
+      }
+
+      &.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 1rem;
+        background: var(--background);
+        padding: 1rem;
+        box-shadow: 0 0 10px var(--shadow);
+        z-index: 999;
+      }
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: 1rem;
+
+      .lang-btn {
+        font-weight: bold;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.5rem;
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--text);
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+
+        &.active {
+          background: var(--primary);
+          color: #000;
+        }
+
+        &:hover {
+          background: var(--accent);
+          color: #000;
+          border: 2px solid var(--accent);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .burger {
+      display: flex;
+    }
+
+    .nav {
+      display: none;
+    }
+
+    .nav.open {
+      display: flex;
+    }
+  }
 }

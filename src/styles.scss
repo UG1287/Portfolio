@@ -1,9 +1,24 @@
 :root {
-  --primary: #00ff91;
-  --accent: #a855f7;
-  --background: #0f172a;
+  --primary: #70E61C;
+  --accent: #9747FF;
+  --background: #141D2F;
   --text: #f1f5f9;
   --shadow: rgba(0, 0, 0, 0.3);
+  --container-max: 1440px; /* oder 1920px – wähle eins und bleib konsistent */
+  --gutter: 24px;
+
+  /* Breakpoints */
+  --bp-xl: 1280px;
+  --bp-lg: 992px;
+  --bp-md: 768px;
+  --bp-sm: 640px;
+  --bp-xs: 480px;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, var(--gutter));
 }
 
 html {
@@ -15,9 +30,20 @@ body {
   background: var(--background);
   color: var(--text);
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden; 
 }
 
 a {
   color: var(--primary);
   text-decoration: none;
+}
+
+/* Flüssige Typo – verhindert Abrisse bei kleinen Screens */
+h1 { font-size: clamp(28px, 5vw, 56px); line-height: 1.15; }
+h2 { font-size: clamp(24px, 4vw, 42px); line-height: 1.2; }
+p  { font-size: clamp(14px, 1.6vw, 18px); line-height: 1.55; }
+
+/* Animations-Schutz für User mit motion-reduce */
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important; }
 }

@@ -1,15 +1,56 @@
-<section class="projects">
-  <h2>{{ 'PROJECTS' | translate }}</h2>
+<section class="projects" id="projects">
+  <!-- optionale Deko-Glows (links/unten rechts) -->
+  <img class="projects__glow projects__glow--left"  src="assets/decors/purple-glow.svg" alt="" aria-hidden="true">
+  <img class="projects__glow projects__glow--right" src="assets/decors/purple-glow.svg" alt="" aria-hidden="true">
 
-  <div class="projects-grid">
-    <div data-aos="fade-up" class="project-card" *ngFor="let project of projects">
-      <img [src]="project.image" [alt]="project.title" />
-      <h3>{{ project.title }}</h3>
-      <p>{{ project.descriptionKey | translate }}</p>
+  <div class="projects__inner">
+    <h2 class="projects__title">{{ 'PROJECTS' | translate }}</h2>
+    <p class="projects__intro">{{ 'PROJECTS_INTRO' | translate }}</p>
 
-      <div class="project-links">
-        <a [href]="project.liveLink" target="_blank" rel="noopener">{{ 'LIVE_DEMO' | translate }}</a>
-        <a [href]="project.repoLink" target="_blank" rel="noopener">GitHub</a>
+    <div
+      class="project-row"
+      *ngFor="let p of projects; let i = index"
+      [class.row--reverse]="i % 2 === 1"
+      data-aos="fade-up"
+    >
+      <!-- Bild / Mockup -->
+      <div class="project__media">
+        <img
+          [src]="p.image"
+          [alt]="p.title"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Textseite -->
+      <div class="project__copy">
+        <h3 class="project__name">{{ p.title }}</h3>
+
+        <div class="project__stack" *ngIf="p.stack?.length">
+          <span class="stack__item" *ngFor="let t of p.stack">{{ t }}</span>
+        </div>
+
+        <p class="project__desc">
+          {{ p.descriptionKey | translate }}
+        </p>
+
+        <div class="project__actions">
+          <a
+            class="btn btn--primary"
+            [href]="p.liveLink"
+            target="_blank"
+            rel="noopener"
+            >{{ 'LIVE_DEMO' | translate }}</a
+          >
+          <a
+            class="btn btn--ghost"
+            [href]="p.repoLink"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+        </div>
       </div>
     </div>
   </div>

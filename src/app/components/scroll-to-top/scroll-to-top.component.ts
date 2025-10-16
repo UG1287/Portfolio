@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './scroll-to-top.component.html',
-  styleUrls: ['./scroll-to-top.component.scss']
+  styleUrls: ['./scroll-to-top.component.scss'],
 })
 export class ScrollToTopComponent {
   showButton = false;

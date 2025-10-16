@@ -1,25 +1,45 @@
+/* wrapper so sticky can align to the right */
+.scroll-wrap {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* change fixed -> sticky, and use top instead of bottom */
 .scroll-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: var(--primary);
-  color: #000;
-  border: none;
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.5rem;
+  bottom: max(calc(19rem + 2px), calc(env(safe-area-inset-bottom) + 16px));
+  margin-right: 1.3rem;
+  width: 39px;
+  height: 39px;
+  background: transparent;
+  border: 0;
+  padding: 0;
   cursor: pointer;
-  z-index: 200;
-  box-shadow: 0 4px 10px var(--shadow);
-  transition: background-color 0.2s;
+  z-index: 999; /* stays above page content but below header */
 
-  &:hover {
-    background-color: #00cc74;
+
+  .arrow-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  .circle,
+  .arrow {
+    stroke: #ffffff;
+    transition: stroke 0.3s ease;
+  }
+
+  &:hover .circle,
+  &:hover .arrow {
+    stroke: var(--primary);
   }
 }
 
-@media (min-width: 768px) {
+
+
+
+@media (max-width: 768px) {
   .scroll-btn {
     display: none;
   }

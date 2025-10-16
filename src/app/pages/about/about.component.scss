@@ -1,48 +1,149 @@
-.about {
-  padding: 4rem 2rem;
-  background-color: #1e293b;
-  color: var(--text);
+:root{
+  --primary:#70E61C;
+  --accent:#9747FF;
+  --bg:#141D2F;
+  --text:#f1f5f9;
+  --shadow:rgba(0,0,0,.35);
 }
 
-.about-content {
+/* ===== Layout ===== */
+.about{
+  position: relative;
+  background: transparent;      /* Hero-Welle darf durchlaufen */
+  color: var(--text);
+  padding-block: clamp(64px, 9vw, 140px);
+  overflow: visible;
+  z-index: 1;
+}
+
+.about__grid{
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
   align-items: center;
-  justify-content: space-between;
+  gap: clamp(24px, 6vw, 64px);
+  column-gap: 64px;
 }
 
-.about-text {
-  flex: 1 1 300px;
+/* ===== Text ===== */
+.about__title{
+  margin: 0 0 24px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1.1;
 }
-
-.about-image {
-  flex: 1 1 300px;
-  text-align: center;
+.about__lead{
+  margin: 0 0 16px;
+  max-width: 460px;
+  opacity: .92;
 }
-
-.about-image img {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px var(--shadow);
-}
-
-.cta-btn {
+.about__cta{
   display: inline-block;
-  margin-top: 1.5rem;
-  background-color: var(--primary);
-  color: #000;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  margin-top: 18px;
+  padding: 12px 20px;
+  background: #70E61C;          /* feste Farbe -> keine Linter-Warnung */
+  color: #0b0f17;
+  font-weight: 700;
   text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
+  border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(112,230,28,.28);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  &:hover{
+    transform: translateY(-1px);
+    background: #7df537;
+    box-shadow: 0 12px 28px rgba(112,230,28,.35);
+  }
 }
 
-.cta-btn:hover {
-  background-color: #00cc74;
+/* ===== Visual (Ring + Portrait + Glow + Linie) ===== */
+$ring-d: clamp(280px, 34vw, 450px);      /* Durchmesser Ring */
+$ring-stroke: 4px;   /* Strichstärke Ring / Linie */
+$portrait-d: 430px;  /* Durchmesser Portrait */
+
+.about__visual{
+  position: relative;
+  display: grid;
+  place-items: center;
+  z-index: 1; /* Inhalt über der Hero-Welle */
+}
+
+/* optionaler lila Glow */
+.about__glow{
+  position: absolute;
+  right: -40px;      /* feinjustieren bis es sitzt */
+  top: -60px;
+  width: 407px;      /* Figma: 407 × 608 */
+  height: 608px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;        /* hinter Ring/Portrait/Linie */
+}
+
+.about__portraitWrap{
+  position: relative;
+  width: $ring-d;
+  height: $ring-d;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.about__portrait{
+  width: $portrait-d;
+  height: $portrait-d;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 14px 26px var(--shadow));
+  z-index: 2;
+}
+
+.about__ring{
+  position: absolute;
+  inset: 0;
+  border: $ring-stroke solid var(--primary);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Linie an der rechten Ring-Tangente (Ringmitte + Radius) */
+/* Feintuning-Variable für die Ansatzstelle */
+$line-nudge: calc(#{$ring-stroke} / 2 + 2px);
+
+.about__line{
+  position: absolute;
+  left: calc(50% + (#{$ring-d} / 2) - #{$line-nudge}); /* <- hier */
+  top: 52%;
+  width: 100vw;
+  height: $ring-stroke;
+  background: var(--primary);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+
+/* ===== einfache Responsive-Anpassungen ===== */
+@media (max-width: 1280px){
+  .about__grid{ column-gap: 48px; }
+  .about__title{ font-size: 56px; }
+}
+@media (max-width: 980px){
+  .about{
+    padding: 96px 0;
+  }
+  .about__grid{
+    grid-template-columns: 1fr;
+    row-gap: 48px;
+  }
+  .about__visual{ order: -1; margin-inline: auto; }
+  .about__copy{ order: 2; }
+  .about__line{ display: none; }      /* Mobile: Linie aus */
+  .about__glow{
+    right: -80px; top: -20px; width: 300px; height: 448px; opacity: .9;
+  }
 }

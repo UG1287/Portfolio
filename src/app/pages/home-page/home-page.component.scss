@@ -1,36 +1,252 @@
 .hero {
-  height: 100vh;
-  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+  min-height: 90svh; /* neue „small viewport“ Einheit */
+  min-height: 90dvh; /* dynamic viewport */
+  min-height: 90vh; /* Fallback */
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   padding: 2rem;
+  position: relative;
   color: var(--text);
+  overflow-x: hidden;  /* schützt vor H-Scroll */
+  overflow-y: hidden;
+  position: relative; /* Anker für absolute Elemente */
+  isolation: isolate;
+  z-index: 0;
+  /* Stelle sicher, dass Inhalt über der Welle liegt */
+  .hero-container,
+  .hero .scroll-down {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Die Welle selbst unter allem Content, über dem Background */
+  .hero-wave {
+    position: absolute;
+    top: 440px;
+    right: 0;
+    bottom: -14vh; /* ragt in #about hinein – Wert feinjustieren */
+    width: 135vw; /* etwas breiter, damit die Kurve „aus dem Rand läuft“ */
+    max-width: none;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* 3-Spalten-Layout: Bild | "I am" | Text */
+  .hero-container {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) 80px minmax(480px, 1fr);
+    align-items: center;
+    gap: 2.5rem 4rem; /* row/column */
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  /* Spalte 1 – Bild (deine Glows kannst du später durch SVG ersetzen) */
+  .hero-image {
+    --shadow-width: clamp(620px, 48vw, 750px);
+    --shadow-left: -60px;
+    --shadow-top: -10px;
+    --shadow-rotate: 8deg;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate; // eigener Stacking-Kontext -> saubere Layer
+
+    .portrait {
+      position: relative;
+      z-index: 2;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.35));
+    }
+
+    .shadow {
+      position: absolute;
+      z-index: 1;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.95;
+      will-change: transform;
+
+      /* Größe/Position – grob wie im Figma-Export */
+      width: clamp(520px, 48vw, 700px);
+      height: auto;
+      left: var(--shadow-left, -60px);
+      top: var(--shadow-top, -10px);
+      transform-origin: center;
+
+      /* optional: gibt auf dunklem BG oft den „richtigen“ Blend-Look */
+      mix-blend-mode: screen;
+    }
+  }
+
+  /* Rechte Spalte: Text */
+  .hero-text {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    max-width: var(--copy-w);
+    min-height: var(--copy-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    text-align: left;
+    /* etwas Puffer links, damit "I am" Platz hat */
+    padding-left: 8px;
+    white-space: nowrap;
+
+    /* Vertikales "I am" im selben Container platzieren */
+    .vertical-text {
+      position: absolute;
+      left: -100px;
+      top: 37%;
+      transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-family: "Poppins", sans-serif;
+      font-size: 84px;
+      font-weight: 250;
+      line-height: 1.2;
+      color: #fff;
+      white-space: nowrap;
+      text-decoration: none !important;
+      border: 0 !important;
+      &::before,
+      &::after {
+        content: none !important;
+      }
+    }
+
+    h1 {
+      font-size: 90px;
+      margin: 0;
+      font-style: bold;
+      line-height: 120%;
+      strong {
+        font-weight: 700;
+        color: var(--text);
+      }
+    }
+
+    h2 {
+      font-size: 58px;
+      color: var(--accent);
+      margin: 0;
+      font-weight: 400;
+      line-height: 120%;
+    }
+
+    .cta-btn {
+      align-self: center;
+      margin-top: 14px;
+      display: inline-block;
+      padding: 0.85rem 1.6rem;
+      background-color: var(--primary);
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 0.6rem;
+      transition: background-color 0.2s ease;
+      &:hover {
+        background-color: #7df537;
+      }
+    }
+  }
+
+  /* Scroll-Down: Text gedreht, Pfeil zeigt weiter nach unten */
+  .scroll-down {
+    position: absolute;
+    right: 24px;
+    bottom: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px; /* Figma */
+    writing-mode: vertical-rl; /* macht die Zeile vertikal */
+    transform: none; /* frühere -90° Rotation entfernen */
+    transform-origin: center;
+    color: #fff;
+    opacity: 0.7;
+    z-index: 1;
+
+    span {
+      font-family: "Poppins", sans-serif;
+      font-size: 23px; /* Figma */
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    img {
+      width: 24px;
+      height: 24px; /* Figma */
+    }
+  }
 }
 
-.hero h1 {
-  font-size: 3rem;
-  margin: 0;
+/* Anker-Offset für Header */
+section[id] {
+  scroll-margin-top: 100px; // an Headerhöhe anpassen
 }
 
-.hero h2 {
-  font-size: 1.5rem;
-  margin: 1rem 0 2rem;
-  color: var(--primary);
+/* Responsive Feinschliff */
+@media (max-width: 992px) {
+  .hero .hero-container {
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .hero .hero-wave {
+    bottom: -10vh;
+    width: 150vw;
+  }
+
+  .hero .hero-text .vertical-text {
+    left: -60px; /* etwas näher ran auf Tablet */
+    font-size: 48px;
+  }
+
+  .hero .scroll-down {
+    right: 12px;
+    bottom: 10%;
+  }
 }
 
-.cta-btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--primary);
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s;
-}
+@media (max-width: 640px) {
+  .hero .hero-image {
+    --shadow-width: 420px;
+    --shadow-left: -20px;
+    --shadow-top: 10px;
+    --shadow-rotate: 12deg;
+  }
 
-.cta-btn:hover {
-  background-color: #00cc74;
+  .hero {
+    padding: 1.25rem;
+  }
+
+  .hero .hero-wave {
+    bottom: -8vh;
+    width: 170vw;
+  }
+
+  .hero .hero-image img {
+    max-width: 300px;
+  }
+
+  .hero .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero .hero-text .vertical-text {
+    left: -50px;
+    font-size: 36px;
+  }
+
+  .hero .scroll-down {
+    display: none; /* optional auf sehr kleinen Screens */
+  }
 }

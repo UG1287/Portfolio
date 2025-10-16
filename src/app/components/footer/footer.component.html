@@ -1,15 +1,45 @@
-<footer class="footer">
-  <div class="footer-left">
-    <span>© {{ currentYear }} Ugursay Pürcek</span>
-  </div>
+<footer class="footer" id="footer">
+  <!-- top green rule is drawn via ::before in CSS -->
+  <div class="footer__inner">
+    <!-- Left: brand + legal links -->
+    <div class="footer__brand">
+      <!-- If you have a logo, replace the span with an <img> -->
+      <a routerLink="/" class="brand">
+        <span class="brand__text">
+          Uğur<span class="brand__accent">say</span>
+        </span>
+      </a>
 
-  <div class="footer-links">
-    <a routerLink="/impressum">{{ 'IMPRESSUM' | translate }}</a>
-    <a routerLink="/datenschutz">{{ 'DATENSCHUTZ' | translate }}</a>
-  </div>
+      <nav class="footer__links">
+        <a routerLink="/impressum">{{ 'IMPRESSUM' | translate }}</a>
+        <a routerLink="/datenschutz">{{ 'DATENSCHUTZ' | translate }}</a>
+      </nav>
+    </div>
 
-  <div class="footer-socials">
-    <a href="https://github.com/DEIN_GITHUB" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://linkedin.com/in/DEIN_LINKEDIN" target="_blank" rel="noopener">LinkedIn</a>
+    <!-- Middle: copyright -->
+    <div class="footer__copy">
+      © {{ currentYear }} Uğursay Pürçek
+    </div>
+
+    <!-- Right: socials -->
+    <nav class="footer__socials" aria-label="social links">
+      <a
+        href="https://github.com/DEIN_GITHUB"
+        target="_blank" rel="noopener"
+        aria-label="GitHub"
+        class="social"
+      >
+        <img src="assets/icons/8. Github button.png" alt="" />
+      </a>
+
+      <a
+        href="https://linkedin.com/in/DEIN_LINKEDIN"
+        target="_blank" rel="noopener"
+        aria-label="LinkedIn"
+        class="social"
+      >
+        <img src="assets/icons/10. Linkedin button.png" alt="" />
+      </a>
+    </nav>
   </div>
 </footer>

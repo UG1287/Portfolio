@@ -7,17 +7,36 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.scss']
+  styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
   skills = [
-    { name: 'HTML', icon: 'assets/icons/html5.svg' },
-    { name: 'CSS', icon: 'assets/icons/css3.svg' },
-    { name: 'JavaScript', icon: 'assets/icons/javascript.svg' },
-    { name: 'Angular', icon: 'assets/icons/angular.svg' },
-    { name: 'Python', icon: 'assets/icons/python.svg' },
-    { name: 'Django', icon: 'assets/icons/django.svg' },
-    { name: 'Git', icon: 'assets/icons/git.svg' },
-    { name: 'Responsive Design', icon: 'assets/icons/responsive.svg' }
+    { name: 'HTML', icon: 'assets/icons/html.png' },
+    { name: 'CSS', icon: 'assets/icons/css.png' },
+    { name: 'JavaScript', icon: 'assets/icons/js.png' },
+    { name: 'TypeScript', icon: 'assets/icons/ts.png' },
+    { name: 'Angular', icon: 'assets/icons/angular.png' },
+    { name: 'REST-API', icon: 'assets/icons/rest_api.png' },
+    { name: 'Git', icon: 'assets/icons/git.png' },
+    { name: 'Scrum', icon: 'assets/icons/scrum.png' },
+    { name: 'Material Design', icon: 'assets/icons/material_design.png' },
+    {
+      name: 'Continually Learning',
+      icon: 'assets/icons/continually_learning.png',
+      key: 'learning',
+      tooltip: {
+        title: 'I have a special interest in learning',
+        items: [
+          { name: 'React', icon: 'assets/icons/React.svg' },
+          { name: 'Vue.js', icon: 'assets/icons/VueJs.svg' },
+        ],
+      },
+    },
   ];
+
+  scrollTo(id: string, ev?: Event) {
+    ev?.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }

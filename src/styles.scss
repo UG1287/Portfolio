@@ -1,11 +1,29 @@
+/* Vendor CSS */
+@import "aos/dist/aos.css";
+
+/* =======================
+   Design Tokens / Globals
+   ======================= */
 :root {
-  --primary: #70E61C;
-  --accent: #9747FF;
-  --background: #141D2F;
+  --primary: #70e61c;
+  --accent: #9747ff;
+  --background: #141d2f;
   --text: #f1f5f9;
   --shadow: rgba(0, 0, 0, 0.3);
-  --container-max: 1440px; /* oder 1920px – wähle eins und bleib konsistent */
+
+  --container-max: 1440px;
+  --safe-x: max(16px, (100vw - var(--container-max)) / 2);
+
+  --header-h: 109px;
+  --header-h-sm: 109px;
   --gutter: 24px;
+
+  /* Button Tokens */
+  --btn-radius: .7rem;
+  --btn-py: .85rem;
+  --btn-px: 1.6rem;
+  --btn-shadow: 0 8px 24px rgba(0,0,0,.18);
+  --btn-shadow-hover: 0 10px 28px rgba(0,0,0,.22);
 
   /* Breakpoints */
   --bp-xl: 1280px;
@@ -15,35 +33,159 @@
   --bp-xs: 480px;
 }
 
+/* Reset / Consistency */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Layout-Helfer */
 .container {
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: clamp(16px, 3vw, var(--gutter));
 }
 
-html {
-  scroll-behavior: smooth;
-}
+section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+/* Base */
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   background: var(--background);
   color: var(--text);
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden; 
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: var(--primary);
+a { color: var(--primary); text-decoration: none; }
+
+/* Flüssige Typo */
+h1 {
+  font-size: clamp(28px, 5vw, 56px);
+  line-height: 1.15;
+  margin: 0;
+}
+h2 {
+  font-size: clamp(24px, 4vw, 42px);
+  line-height: 1.2;
+  margin: 0;
+}
+p {
+  font-size: clamp(14px, 1.6vw, 18px);
+  line-height: 1.55;
+}
+
+/* Fokus-Styles */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Medien */
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===========================
+   Reusable Buttons (global)
+   =========================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  padding: var(--btn-py) var(--btn-px);
+  border: 0;
+  border-radius: var(--btn-radius);
+
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
   text-decoration: none;
+
+  box-shadow: var(--btn-shadow);
+  cursor: pointer;
+
+  transform-origin: left top;
+  transition: background .18s ease, transform .18s ease, box-shadow .2s ease;
 }
 
-/* Flüssige Typo – verhindert Abrisse bei kleinen Screens */
-h1 { font-size: clamp(28px, 5vw, 56px); line-height: 1.15; }
-h2 { font-size: clamp(24px, 4vw, 42px); line-height: 1.2; }
-p  { font-size: clamp(14px, 1.6vw, 18px); line-height: 1.55; }
+.btn:hover {
+  background: var(--accent);
+  transform: scale(1.1);
+  box-shadow: var(--btn-shadow-hover);
+}
 
-/* Animations-Schutz für User mit motion-reduce */
-@media (prefers-reduced-motion: reduce){
-  * { animation: none !important; transition: none !important; }
+.btn:active { transform: translateY(0) scale(0.98); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn[disabled],
+.btn.is-disabled {
+  opacity: .6;
+  pointer-events: none;
+  filter: grayscale(.2);
+}
+
+/* Variants */
+.btn--accent { background: var(--accent); }
+.btn--accent:hover { background: var(--primary); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid currentColor;
+  box-shadow: none;
+}
+.btn--ghost:hover {
+  background: rgba(255,255,255,.08);
+  transform: translateY(-1px) scale(1.03);
+}
+
+/* Sizes */
+.btn--sm { --btn-py: .55rem; --btn-px: 1rem; font-size: .9rem; }
+.btn--lg { --btn-py: 1rem;   --btn-px: 2rem; font-size: 1.05rem; }
+
+/* ===========================
+   Accessibility / Motion
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  /* Animationen global aus; Transitions ohne !important,
+     damit Komponenten (z.B. .btn) gezielt etwas behalten können */
+  * { animation: none !important; transition: none; }
+
+  /* Buttons behalten sanfte Farb-/Shadow-Übergänge */
+  .btn { transition: background .01s linear, box-shadow .01s linear; }
+}
+
+/* Responsive Offsets */
+@media (max-width: 768px) {
+  section[id] { scroll-margin-top: calc(var(--header-h-sm) + 12px); }
+}
+
+/* Body scroll-lock fürs Mobile-Menu */
+body.no-scroll { overflow: hidden; }
+
+/* Konsistente Interaktions-UX */
+button, [role="button"], a[href] { cursor: pointer; }
+a, button {
+  transition:
+    color 100ms ease,
+    background-color 100ms ease,
+    border-color 100ms ease,
+    transform 100ms ease,
+    box-shadow 100ms ease;
 }

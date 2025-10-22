@@ -8,11 +8,19 @@
   "ABOUT_TEXT_2": "With a background in IT support, I bring technical precision, solution-oriented thinking, and a strong user perspective to every project.",
   "SEE_MY_SKILLS": "View my skills",
   "SKILLS": "My skills",
+  "SKILLS_LEAD": "I love modern web tech and continuously expand my toolkit.",
+  "LOOKING_FOR": "Looking for",
+  "ANOTHER_SKILL": "another skill",
+  "SKILLS_NOTE": "Tell me what you need — I am always interested in learning new tools.",
   "PROJECTS": "Portfolio",
+  "PROJECTS_INTRO": "A small selection of my work.",
   "LIVE_DEMO": "Live Demo",
   "PROJECT_POLLO_DESC": "A 2D JavaScript game with animations, collisions and core gameplay logic.",
   "PROJECT_WEATHER_DESC": "A weather app with real-time API data and responsive layout.",
   "CONTACT": "Let's get in touch",
+  "GOT_A_PROBLEM": "Got an exciting project or problem in mind?",
+  "CONTACT_LEAD": "Send me a short brief and I’ll get back to you shortly.",
+  "CONTACT_NOTE": "I only use your data to respond to your request.",
   "NAME": "Name",
   "EMAIL": "Email",
   "MESSAGE": "Message",
@@ -21,5 +29,6 @@
   "REQUIRED": "Required",
   "EMAIL_INVALID": "Invalid email address",
   "MESSAGE_TOO_SHORT": "Message is too short",
-  "MESSAGE_SENT": "Thank you! Your message has been sent."
+  "MESSAGE_SENT": "Thank you! Your message has been sent.",
+  "MESSAGE_ERROR": "Oops, something went wrong. Please try again later."
 }

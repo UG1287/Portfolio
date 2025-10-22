@@ -1,55 +1,65 @@
-<section class="hero" id="hero">
-  <div class="hero-container">
-    <!-- Linke Spalte: Bild -->
-    <div class="hero-image" data-aos="fade-right">
-      <!-- Kombinierter Schatten -->
-      <img
-        class="shadow"
-        src="assets/shadows/photoshadows.svg"
-        alt=""
-        aria-hidden="true"
-      />
+<section class="hero hero--center" id="hero">
+  <div class="container hero__inner" data-aos="fade-up">
+    <div class="hero__headline">
+    <span class="hero__iam">I am</span>
 
-      <!-- Portrait -->
-      <img
-        class="portrait"
-        ngSrc="assets/img/UgursayohneHintergrund.png"
-        alt="Porträt von Uğursay Pürçek"
-        width="646"
-        height="705"
-        priority
-        decoding="async"
-      />
-    </div>
-
-    <!-- Rechte Spalte: Text -->
-    <div class="hero-text" data-aos="fade-left">
-      <span class="vertical-text">I am</span>
+    <div class="hero__copy">
       <h1><strong>Uğursay</strong> Pürçek</h1>
-      <h2>{{ "DEVELOPER_TITLE" | translate }}</h2>
+      <h2>{{ 'DEVELOPER_TITLE' | translate }}</h2>
+    </div>
+  </div>
 
       <a
         href="#contact"
         (click)="scrollToSection($event, 'contact')"
-        class="cta-btn"
+        class="btn"
       >
         {{ "CONTACT" | translate }}
       </a>
     </div>
+  
+
+  <div class="hero__social-strip">
+    <span class="strip"></span>
+    <div class="icons">
+      <a
+        href="https://github.com/UG1287"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+      >
+        <img src="assets/icons/githubbutton.svg" alt="" aria-hidden="true" />
+      </a>
+      <a href="mailto:hello@ugursay-puercek.com" aria-label="E-Mail">
+        <img src="assets/icons/emailbutton.svg" alt="" aria-hidden="true" />
+      </a>
+      <a
+        href="https://www.linkedin.com/in/ugursay-pürcek-566674192/"
+        target="_blank"
+        rel="noopener"
+        aria-label="LinkedIn"
+      >
+        <img src="assets/icons/linkedinbutton.svg" alt="" aria-hidden="true" />
+      </a>
+    </div>
   </div>
 
-  <!-- Curved Hero Wave (dekorativ) -->
-<img src="assets/shadows/Vectorcurvedhero.svg" alt="" class="hero-wave">
+  <div class="hero__decor" aria-hidden="true">
+    <img
+      class="hero__glow hero__glow--tl"
+      src="assets/shadows/heroshadowleft.svg"
+      alt=""
+    />
+    <img
+      class="hero__glow hero__glow--tr"
+      src="assets/shadows/blueheroshadowright.svg"
+      alt=""
+    />
+  </div>
 
-
-  <!-- Scroll Down Hinweis -->
   <div class="scroll-down" data-aos="fade-up">
     <span>Scroll down</span>
-    <img
-      src="assets/icons/arrow-down-line.svg"
-      alt="Scroll down icon"
-      aria-hidden="true"
-    />
+    <img src="assets/icons/arrow-down-line.svg" alt="" aria-hidden="true" />
   </div>
 </section>
 

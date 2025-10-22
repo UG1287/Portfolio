@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, AfterViewInit, Inject } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LogoComponent } from '../../logo/logo.component';
+import { PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -11,50 +12,74 @@ import { LogoComponent } from '../../logo/logo.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements AfterViewInit, OnDestroy {
   activeSection: string = '';
-  private observer!: IntersectionObserver;
+  private io?: IntersectionObserver;
   isMenuOpen = false;
   currentLang = this.translate.currentLang || 'de';
 
-  constructor(private translate: TranslateService) {}
+  private readonly isBrowser: boolean;
+
+  constructor(
+    private translate: TranslateService,
+    @Inject(PLATFORM_ID) platformId: Object,
+    @Inject(DOCUMENT) private doc: Document
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+    if (this.isBrowser) {
+      this.doc.body.classList.toggle('no-scroll', this.isMenuOpen);
+    }
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+    if (this.isBrowser) {
+      this.doc.body.classList.remove('no-scroll');
+    }
   }
 
   navigate(event: Event, id: string) {
     this.scrollToSection(event, id);
-    this.isMenuOpen = false;
+    this.closeMenu();
   }
-  ngOnInit(): void {
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+    if (!('IntersectionObserver' in globalThis)) return;
+
     const sectionIds = ['hero', 'about', 'skills', 'projects', 'contact'];
-    this.observer = new IntersectionObserver(
+
+    this.io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            this.activeSection = entry.target.id;
+            this.activeSection = (entry.target as HTMLElement).id;
             break;
           }
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.35 }
     );
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) this.observer.observe(el);
-    });
+    for (const id of sectionIds) {
+      const el = this.doc.getElementById(id);
+      if (el) this.io.observe(el);
+    }
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
+    this.io?.disconnect();
   }
 
   scrollToSection(event: Event, id: string): void {
     event.preventDefault();
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (!this.isBrowser) return;
+    const el = this.doc.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   switchLang(lang: string): void {

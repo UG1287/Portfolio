@@ -7,26 +7,25 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent {
   projects = [
-  {
-    title: 'El Pollo Loco',
-    image: 'assets/img/pollo-loco-preview.jpg',
-    descriptionKey: 'PROJECT_POLLO_DESC',
-    stack: ['JavaScript', 'HTML', 'CSS'],
-    liveLink: 'https://your-subdomain.de/pollo-loco',
-    repoLink: 'https://github.com/deinGithub/pollo-loco'
-  },
-  {
-    title: 'Weather App',
-    image: 'assets/img/weather-app-preview.jpg',
-    descriptionKey: 'PROJECT_WEATHER_DESC',
-    stack: ['Angular', 'TypeScript', 'API'],
-    liveLink: 'https://your-subdomain.de/weather-app',
-    repoLink: 'https://github.com/deinGithub/weather-app'
-  }
-];
-
+    {
+      title: 'El Pollo Loco',
+      image: 'assets/img/Polloloco.png',
+      descriptionKey: 'PROJECT_POLLO_DESC',
+      stack: ['JavaScript', 'HTML', 'CSS'],
+      liveLink: '/apps/elpolloloco/',
+      repoLink: 'https://github.com/UG1287/El-Pollo-Loco',
+    },
+    {
+      title: 'Join App',
+      image: 'assets/img/join.png',
+      descriptionKey: 'PROJECT_JOIN_DESC',
+      stack: ['Angular', 'TypeScript', 'API'],
+      liveLink: '/apps/join/',
+      repoLink: 'https://github.com/deinGithub/weather-app',
+    },
+  ];
 }

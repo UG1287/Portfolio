@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -10,6 +10,11 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private doc: Document
+  ) {}
+
   skills = [
     { name: 'HTML', icon: 'assets/icons/html.png' },
     { name: 'CSS', icon: 'assets/icons/css.png' },
@@ -36,7 +41,8 @@ export class SkillsComponent {
 
   scrollTo(id: string, ev?: Event) {
     ev?.preventDefault();
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!isPlatformBrowser(this.platformId)) return; // SSR-safe
+    const el = this.doc.getElementById(id);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

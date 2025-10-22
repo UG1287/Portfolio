@@ -8,11 +8,19 @@
   "ABOUT_TEXT_2": "Mit einem Hintergrund in IT-Support bringe ich technische Präzision, lösungsorientiertes Denken und eine starke Nutzerperspektive in jedes Projekt ein.",
   "SEE_MY_SKILLS": "Meine Skills ansehen",
   "SKILLS": "My skills",
+  "SKILLS_LEAD": "Ich arbeite gern mit modernen Web-Technologien und lerne kontinuierlich dazu.",
+  "LOOKING_FOR": "Auf der Suche nach",
+  "ANOTHER_SKILL": "einem anderen Skill",
+  "SKILLS_NOTE": "Sag mir einfach, was du brauchst — ich eigne mir neue Tools schnell an.",
   "PROJECTS": "Portfolio",
+  "PROJECTS_INTRO": "Eine kleine Auswahl meiner Arbeiten.",
   "LIVE_DEMO": "Live-Demo",
   "PROJECT_POLLO_DESC": "Ein 2D-JavaScript-Game mit Animationen, Kollisionen und Spielmechanik.",
   "PROJECT_WEATHER_DESC": "Eine Wetter-App mit Echtzeitdaten via API und responsivem Design.",
   "CONTACT": "Kontaktiere mich",
+  "GOT_A_PROBLEM": "Suchst du jemanden für ein spannendes Projekt?",
+  "CONTACT_LEAD": "Schreib mir kurz worum es geht – ich melde mich zeitnah zurück.",
+  "CONTACT_NOTE": "Ich verwende deine Daten ausschließlich zur Beantwortung deiner Anfrage.",
   "NAME": "Name",
   "EMAIL": "E-Mail",
   "MESSAGE": "Nachricht",
@@ -21,5 +29,6 @@
   "REQUIRED": "Pflichtfeld",
   "EMAIL_INVALID": "Ungültige E-Mail-Adresse",
   "MESSAGE_TOO_SHORT": "Die Nachricht ist zu kurz",
-  "MESSAGE_SENT": "Danke! Deine Nachricht wurde gesendet."
+  "MESSAGE_SENT": "Danke! Deine Nachricht wurde gesendet.",
+  "MESSAGE_ERROR": "Ups, etwas ist schiefgelaufen. Bitte später erneut versuchen."
 }

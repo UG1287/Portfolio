@@ -1,5 +1,5 @@
 import { Component, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { CommonModule, NgOptimizedImage, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
@@ -7,8 +7,6 @@ import { AboutComponent } from '../about/about.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { ProjectsComponent } from '../projects/projects.component';
 import { ContactComponent } from '../contact/contact.component';
-
-import AOS from 'aos';
 
 @Component({
   selector: 'app-home-page',
@@ -28,27 +26,32 @@ import AOS from 'aos';
 })
 export class HomePageComponent implements AfterViewInit {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private doc: Document
+  ) {}
 
   ngAfterViewInit(): void {
-    // Nur im Browser (SSR-Schutz)
     if (isPlatformBrowser(this.platformId)) {
-      AOS.init({
-        duration: 800,
-        easing: 'ease-out',
-        once: true,                 // animiert nur einmal (Landingpage-Feeling)
-        offset: 60,
-        startEvent: 'DOMContentLoaded'
-      });
-
-      // sorgt dafür, dass Elemente im initialen Viewport sofort animieren
-      requestAnimationFrame(() => AOS.refresh());
+      // Dynamischer Import nur im Browser -> kein SSR/Prerender-Fehler, keine CJS-Warnung
+      (async () => {
+        const AOS = (await import('aos')).default;
+        AOS.init({
+          duration: 800,
+          easing: 'ease-out',
+          once: true,
+          offset: 60
+        });
+        // initial sofort animieren
+        requestAnimationFrame(() => AOS.refresh());
+      })();
     }
   }
 
   scrollToSection(event: Event, sectionId: string) {
     event.preventDefault();
-    const el = document.getElementById(sectionId);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (!isPlatformBrowser(this.platformId)) return;
+    const el = this.doc.getElementById(sectionId);
+    el?.scrollIntoView({ behavior: 'smooth' });
   }
 }

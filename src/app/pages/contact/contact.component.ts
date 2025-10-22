@@ -30,7 +30,7 @@ export class ContactComponent {
   mailTest = false;
 
   post = {
-    endPoint: 'https://www.deine-domain.de/sendMail.php',
+    endPoint: '/sendMail.php',
     body: (payload: any) => JSON.stringify(payload),
     options: {
       headers: { 'Content-Type': 'text/plain' },
@@ -40,7 +40,9 @@ export class ContactComponent {
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
-  get f() { return this.contactForm.controls; }
+  get f() {
+    return this.contactForm.controls;
+  }
 
   onSubmit() {
     if (this.sending || this.contactForm.invalid) return;
@@ -56,7 +58,8 @@ export class ContactComponent {
     this.errorMessage = '';
 
     if (!this.mailTest) {
-      this.http.post(this.post.endPoint, this.post.body(payload), this.post.options)
+      this.http
+        .post(this.post.endPoint, this.post.body(payload), this.post.options)
         .subscribe({
           next: () => {
             this.submitted = true;

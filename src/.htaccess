@@ -1,0 +1,69 @@
+# -----------------------------------------
+# Kanonische Domain: ohne www (optional)
+# -----------------------------------------
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.ugursay-puercek\.com$ [NC]
+RewriteRule ^(.*)$ https://ugursay-puercek.com/$1 [L,R=301]
+
+# -----------------------------------------
+# Basis-Optionen
+# -----------------------------------------
+Options -MultiViews
+DirectoryIndex index.html
+RewriteBase /
+
+# -----------------------------------------
+# Favicon-Fallback (vermeidet 404/500)
+# Falls du kein /favicon.ico im Root hast,
+# leite auf dein Assets-Favicon um.
+# -----------------------------------------
+RewriteCond %{REQUEST_URI} ^/favicon\.ico$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^favicon\.ico$ /assets/favicon.ico [L]
+
+# -----------------------------------------
+# SPA-Rewrite:
+# 1) PHP/Backends explizit NICHT umschreiben
+# 2) Echte Dateien/Ordner normal ausliefern
+# 3) Rest auf index.html umschreiben
+# -----------------------------------------
+# (Liste ggf. erweitern, falls du weitere Endpoints hast)
+RewriteCond %{REQUEST_URI} ^/sendMail\.php$ [NC]
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Alles andere an Angular übergeben
+RewriteRule . /index.html [L]
+
+# -----------------------------------------
+# CORS für Fonts/SVGs (CDN/Preload freundlich)
+# -----------------------------------------
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|otf|eot|woff|woff2|svg)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+# -----------------------------------------
+# Caching
+# -----------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 30 days"
+</IfModule>
+
+# -----------------------------------------
+# (Optional) Komprimierung
+# -----------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>

@@ -1,134 +1,201 @@
-.header {
+.header__inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: var(--background);
-  color: var(--text);
+  justify-content: space-between;
+  padding-inline: clamp(12px, 3vw, 24px);
+}
+
+.header__inner > * {
+  min-width: 0;
+}
+
+.header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background);
+  color: var(--text);
 
   .logo {
-    font-weight: 700;
-    font-size: 1.5rem;
-    font-family: "Poppins", sans-serif;
+    font: 700 1.5rem/1 "Poppins", sans-serif;
     color: var(--text);
-  }
-
-  .burger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-
-    span {
-      width: 25px;
-      height: 3px;
-      background: var(--text);
-      transition: 0.3s;
-    }
-
-    &.open span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-
-    &.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    &.open span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .right-group {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    .nav {
-      display: flex;
-      gap: 1.5rem;
+    gap: clamp(16px, 3vw, 32px);
+  }
 
-      a {
-        text-decoration: none;
-        color: var(--text);
-        font-weight: 400;
-        position: relative;
-        transition: color 0.2s;
+  /* Desktop nav */
+  .nav {
+    display: flex;
+    gap: 1.5rem;
 
-        &.active,
-        &:hover {
-          color: var(--primary);
-          font-weight: 600;
-        }
+    a {
+      position: relative;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 100ms ease;
 
-        &.active::after,
-        &:hover::after {
-          content: "";
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 55.5px;
-          height: 2px;
-          background-color: var(--accent);
-        }
+      &:hover,
+      &.active {
+        color: var(--primary);
+        font-weight: 600;
       }
 
-      &.open {
-        display: flex;
-        flex-direction: column;
+      &::after {
+        content: "";
         position: absolute;
-        top: 100%;
-        right: 1rem;
-        background: var(--background);
-        padding: 1rem;
-        box-shadow: 0 0 10px var(--shadow);
-        z-index: 999;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 100ms ease;
+      }
+      &:hover::after,
+      &.active::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  .lang-switch {
+    display: flex;
+    gap: 8px;
+
+    .lang-btn {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--primary);
+      transition: background 100ms ease, color 100ms ease,
+        border-color 100ms ease;
+
+      &.active {
+        background: var(--primary);
+        color: #000;
+      }
+      &:hover {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+      }
+    }
+  }
+
+  /* Burger */
+  .burger {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    span {
+      width: 24px;
+      height: 3px;
+      background: var(--text);
+      transition: transform 200ms ease, opacity 200ms ease;
+    }
+    &.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    &.open span:nth-child(2) {
+      opacity: 0;
+    }
+    &.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  /* Mobile overlay */
+  .nav-overlay {
+    display: none;
+  }
+  .nav-overlay.open {
+    display: grid;
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(6px);
+    place-items: center;
+    padding: 24px;
+
+    .menu {
+      display: grid;
+      gap: clamp(20px, 4vh, 32px);
+      justify-items: center;
+    }
+    .menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      font-size: clamp(20px, 6vw, 28px);
+      line-height: 1.2;
+      &:hover {
+        color: var(--primary);
       }
     }
 
-    .lang-switch {
+    .langs {
       display: flex;
-      gap: 0.5rem;
-      margin-left: 1rem;
-
-      .lang-btn {
-        font-weight: bold;
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
-        border-radius: 0.5rem;
-        background: transparent;
-        border: 2px solid var(--primary);
-        color: var(--text);
-        cursor: pointer;
-        transition: background 0.3s, color 0.3s;
-
-        &.active {
-          background: var(--primary);
-          color: #000;
-        }
-
-        &:hover {
-          background: var(--accent);
-          color: #000;
-          border: 2px solid var(--accent);
-        }
+      gap: 8px;
+      justify-content: center;
+      margin-top: clamp(8px, 2vh, 16px);
+    }
+    .langs .lang-btn {
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 0.6rem;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--primary);
+      &.active {
+        background: var(--primary);
+        color: #000;
       }
     }
   }
 
   @media (max-width: 768px) {
-    .burger {
-      display: flex;
-    }
-
+    & {
+      height: var(--header-h-sm);
+    } /* bezieht sich auf .header selbst */
     .nav {
       display: none;
-    }
-
-    .nav.open {
+    } /* Desktop-Nav ausblenden */
+    .burger {
       display: flex;
-    }
+    } /* Burger zeigen */
+    .lang-switch {
+      display: none;
+    } /* Lang-Switch im Header ausblenden */
   }
 }

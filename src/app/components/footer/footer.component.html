@@ -1,9 +1,6 @@
 <footer class="footer" id="footer">
-  <!-- top green rule is drawn via ::before in CSS -->
   <div class="footer__inner">
-    <!-- Left: brand + legal links -->
     <div class="footer__brand">
-      <!-- If you have a logo, replace the span with an <img> -->
       <a routerLink="/" class="brand">
         <span class="brand__text">
           Uğur<span class="brand__accent">say</span>
@@ -11,21 +8,18 @@
       </a>
 
       <nav class="footer__links">
-        <a routerLink="/impressum">{{ 'IMPRESSUM' | translate }}</a>
-        <a routerLink="/datenschutz">{{ 'DATENSCHUTZ' | translate }}</a>
+        <a routerLink="/impressum">{{ "IMPRESSUM" | translate }}</a>
+        <a routerLink="/datenschutz">{{ "DATENSCHUTZ" | translate }}</a>
       </nav>
     </div>
 
-    <!-- Middle: copyright -->
-    <div class="footer__copy">
-      © {{ currentYear }} Uğursay Pürçek
-    </div>
+    <div class="footer__copy">© {{ currentYear }} Uğursay Pürçek</div>
 
-    <!-- Right: socials -->
     <nav class="footer__socials" aria-label="social links">
       <a
         href="https://github.com/UG1287"
-        target="_blank" rel="noopener"
+        target="_blank"
+        rel="noopener"
         aria-label="GitHub"
         class="social"
       >
@@ -34,7 +28,8 @@
 
       <a
         href="https://linkedin.com/in/ugursay-pürcek-566674192"
-        target="_blank" rel="noopener"
+        target="_blank"
+        rel="noopener"
         aria-label="LinkedIn"
         class="social"
       >

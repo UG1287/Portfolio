@@ -1,19 +1,15 @@
-/* ===== Section ===== */
 .about {
-  /* tune once; they control depth & size of the dip into Skills */
-  --curve-h: clamp(160px, 18vw, 320px); /* visual curve height */
-  --curve-dip: calc(var(--curve-h) * 0.3); /* how far it dips over Skills */
-  --curve-shift-desktop: 12vw; /* crest nudge under portrait on desktop */
-
+  --curve-h: clamp(160px, 18vw, 320px);
+  --curve-dip: calc(var(--curve-h) * 0.3);
+  --curve-shift-desktop: 12vw;
   position: relative;
-  isolation: isolate; /* ensure clean z-index stacking */
+  isolation: isolate;
   color: var(--text);
   padding-block: clamp(72px, 8vw, 140px);
-  padding-bottom: calc(56px + var(--curve-dip)); /* avoid overlap with copy */
+  padding-bottom: calc(56px + var(--curve-dip));
   overflow: visible;
 }
 
-/* Use the global .container (max 1440px) */
 .container {
   max-width: var(--container-max);
 }
@@ -22,51 +18,48 @@
   z-index: 4;
 }
 
-/* ===== Layout ===== */
 .about__grid {
   display: grid;
-  grid-template-columns: 1.05fr 1fr; /* text | visual */
+  grid-template-columns: 1.05fr 1fr;
   align-items: center;
   gap: clamp(24px, 5vw, 64px);
 }
 
-/* ===== Text ===== */
 .about__title {
   margin: 0 0 18px;
   font: 800 clamp(36px, 6vw, 64px) / 1.1 "Poppins", sans-serif;
 }
+
 .about__lead {
   margin: 0 0 16px;
   max-width: 52ch;
   opacity: 0.92;
 }
+
 .about__cta {
   margin-top: 18px;
 }
 
-/* ===== Visual (glow + portrait) ===== */
 .about__visual {
   position: relative;
   min-height: clamp(360px, 42vw, 720px);
   display: grid;
   place-items: center;
-  z-index: 1; /* above the wave */
+  z-index: 1;
 }
 
-/* the required glow (exact size & behind portrait) */
 .about__glow {
   position: absolute;
-  width: 634px; /* fixed per request */
+  width: 634px;
   height: 616px;
-  inset: auto auto 8% 6%; /* bottom/left offset – tweak if needed */
+  inset: auto auto 8% 6%;
   object-fit: contain;
   mix-blend-mode: screen;
   opacity: 0.95;
-  z-index: 0; /* behind portrait */
+  z-index: 0;
   pointer-events: none;
 }
 
-/* big portrait */
 .about__portrait {
   position: relative;
   z-index: 2;
@@ -75,50 +68,44 @@
   filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.35));
 }
 
-/* ===== Curves (shared basics) ===== */
 .about__curve {
   display: block;
   pointer-events: none;
   user-select: none;
   height: auto;
-  aspect-ratio: 1440px / 878.5px; /* match your Figma export viewBox */
+  aspect-ratio: 1440px / 878.5px;
   object-fit: cover;
   object-position: bottom center;
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.25));
 }
 
-/* Desktop curve — belongs to the section, spans section width */
 .about__curve--section {
   position: absolute;
   left: 50%;
   bottom: calc(-5.5 * var(--curve-dip));
-  transform: translateX(-50%); /* center to the SECTION */
-  width: min(
-    100%,
-    var(--container-max)
-  ); /* full section width, capped at 1440px */
-  z-index: 3; /* above portrait, below copy */
+  transform: translateX(-50%);
+  width: min(100%, var(--container-max));
+  z-index: 3;
 }
 
-/* Mobile curve — belongs to the portrait cell, sticks to its bottom */
 .about__curve--visual {
   position: absolute;
   left: 50%;
   bottom: 0;
-  transform: translateX(-50%); /* center inside the visual column */
-  width: 100%; /* match the column width */
-  z-index: 2; /* above portrait */
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 2;
 }
 
-/* ===== Responsive ===== */
 @media (min-width: 1201px) {
   .about__curve--section {
     display: block;
   }
+
   .about__curve--visual {
     display: none;
   }
-  /* optional: nudge the crest under the portrait */
+
   .about__curve--section {
     object-position: bottom calc(50% + var(--curve-shift-desktop));
   }
@@ -129,13 +116,16 @@
     grid-template-columns: 1fr;
     row-gap: 40px;
   }
+
   .about__visual {
     order: -1;
   }
+
   .about__curve--section {
     display: none;
     bottom: calc(-6.6 * var(--curve-dip));
   }
+
   .about__curve--visual {
     display: block;
     bottom: calc(-6.6 * var(--curve-dip));
@@ -146,16 +136,19 @@
   .about {
     --curve-h: clamp(140px, 22vw, 240px);
   }
+
   .about__curve--visual {
     bottom: calc(-2 * var(--curve-dip));
   }
+
   .about__copy {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .about__glow{
+
+  .about__glow {
     top: -90px;
   }
 }

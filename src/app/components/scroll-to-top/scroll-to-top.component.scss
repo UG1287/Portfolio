@@ -1,11 +1,9 @@
-/* wrapper so sticky can align to the right */
 .scroll-wrap {
   position: relative;
   display: flex;
   justify-content: flex-end;
 }
 
-/* change fixed -> sticky, and use top instead of bottom */
 .scroll-btn {
   position: fixed;
   bottom: max(calc(19rem + 2px), calc(env(safe-area-inset-bottom) + 16px));
@@ -16,8 +14,7 @@
   border: 0;
   padding: 0;
   cursor: pointer;
-  z-index: 999; /* stays above page content but below header */
-
+  z-index: 999;
 
   .arrow-icon {
     width: 100%;
@@ -35,9 +32,6 @@
     stroke: var(--primary);
   }
 }
-
-
-
 
 @media (max-width: 768px) {
   .scroll-btn {

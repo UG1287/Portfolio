@@ -1,5 +1,4 @@
 <section class="contact" id="contact">
-  <!-- optionaler lila Glow -->
   <img
     class="contact__glow"
     src="assets/shadows/Purpleshadow4.svg"
@@ -8,17 +7,14 @@
   />
 
   <div class="contact__inner">
-    <!-- Headline über beide Spalten -->
     <h2 class="contact__title">{{ "CONTACT" | translate }}</h2>
 
-    <!-- LINKE SPALTE: Copy -->
     <div class="contact__copy" data-aos="fade-right">
       <p class="contact__eyebrow">{{ "GOT_A_PROBLEM" | translate }}</p>
       <p class="contact__lead">{{ "CONTACT_LEAD" | translate }}</p>
       <p class="contact__note" [innerHTML]="'CONTACT_NOTE' | translate"></p>
     </div>
 
-    <!-- RECHTE SPALTE: Formular -->
     <form
       class="contact__form"
       [formGroup]="contactForm"
@@ -26,83 +22,85 @@
       novalidate
       data-aos="fade-left"
     >
-      <!-- NAME -->
       <div class="field" [class.has-error]="isError('name')">
-  <label class="vh" for="contactName">{{ 'NAME' | translate }}</label>
-  <input
-    id="contactName"
-    class="contact__input"
-    autocomplete="off" autocapitalize="off" autocorrect="off"
-    spellcheck="false" inputmode="text"
-    formControlName="name"
-    [attr.placeholder]="'NAME' | translate"
-    (blur)="showErrorFor('name')"
-    [attr.aria-invalid]="isError('name')"
-  />
-  <span class="field__icon" aria-hidden="true">!</span>
-  <span class="field-msg" *ngIf="isError('name')">
-    {{ 'REQUIRED' | translate }}
-  </span>
-</div>
-
+        <label class="vh" for="contactName">{{ "NAME" | translate }}</label>
+        <input
+          id="contactName"
+          class="contact__input"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="text"
+          formControlName="name"
+          [attr.placeholder]="'NAME' | translate"
+          (blur)="showErrorFor('name')"
+          [attr.aria-invalid]="isError('name')"
+        />
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="isError('name')">
+          {{ "REQUIRED" | translate }}
+        </span>
+      </div>
 
       <div class="field" [class.has-error]="isError('email')">
-  <label class="vh" for="contactEmail">{{ 'EMAIL' | translate }}</label>
-  <input
-    id="contactEmail"
-    class="contact__input"
-    autocomplete="off" autocapitalize="off" autocorrect="off"
-    spellcheck="false" inputmode="email" type="email"
-    formControlName="email"
-    [attr.placeholder]="'EMAIL' | translate"
-    (blur)="showErrorFor('email')"
-    [attr.aria-invalid]="isError('email')"
-  />
-  <span class="field__icon" aria-hidden="true">!</span>
-  <span class="field-msg" *ngIf="isError('email')">
-    {{ f.email.errors?.['email'] ? ('EMAIL_INVALID' | translate) : ('REQUIRED' | translate) }}
-  </span>
-</div>
-
+        <label class="vh" for="contactEmail">{{ "EMAIL" | translate }}</label>
+        <input
+          id="contactEmail"
+          class="contact__input"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="email"
+          type="email"
+          formControlName="email"
+          [attr.placeholder]="'EMAIL' | translate"
+          (blur)="showErrorFor('email')"
+          [attr.aria-invalid]="isError('email')"
+        />
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="isError('email')">
+          {{ f.email.errors?.['email'] ? ('EMAIL_INVALID' | translate) : ('REQUIRED' | translate) }}
+        </span>
+      </div>
 
       <div class="field" [class.has-error]="isError('message')">
-  <label class="vh" for="contactMessage">{{ 'MESSAGE' | translate }}</label>
-  <textarea
-    id="contactMessage"
-    class="contact__textarea"
-    rows="7"
-    formControlName="message"
-    [attr.placeholder]="'MESSAGE' | translate"
-    (blur)="showErrorFor('message')"
-    [attr.aria-invalid]="isError('message')"
-  ></textarea>
-  <span class="field__icon" aria-hidden="true">!</span>
-  <span class="field-msg" *ngIf="isError('message')">
-    {{ 'MESSAGE_TOO_SHORT' | translate }}
-  </span>
-</div>
+        <label class="vh" for="contactMessage">{{
+          "MESSAGE" | translate
+        }}</label>
+        <textarea
+          id="contactMessage"
+          class="contact__textarea"
+          rows="7"
+          formControlName="message"
+          [attr.placeholder]="'MESSAGE' | translate"
+          (blur)="showErrorFor('message')"
+          [attr.aria-invalid]="isError('message')"
+        ></textarea>
+        <span class="field__icon" aria-hidden="true">!</span>
+        <span class="field-msg" *ngIf="isError('message')">
+          {{ "MESSAGE_TOO_SHORT" | translate }}
+        </span>
+      </div>
 
+      <div class="field field--privacy" [class.has-error]="isError('privacy')">
+        <label class="contact__privacy">
+          <input
+            type="checkbox"
+            formControlName="privacy"
+            (blur)="showErrorFor('privacy')"
+            (change)="showErrorFor('privacy')"
+            [attr.aria-invalid]="isError('privacy')"
+          />
+          <span [innerHTML]="'PRIVACY_TEXT' | translate"></span>
+        </label>
 
-      <!-- PRIVACY -->
-<div class="field field--privacy" [class.has-error]="isError('privacy')">
-  <label class="contact__privacy">
-    <input
-      type="checkbox"
-      formControlName="privacy"
-      (blur)="showErrorFor('privacy')"
-      (change)="showErrorFor('privacy')"
-      [attr.aria-invalid]="isError('privacy')"
-    />
-    <span [innerHTML]="'PRIVACY_TEXT' | translate"></span>
-  </label>
+        <span class="field-msg" *ngIf="isError('privacy')">
+          {{ "PRIVACY_REQUIRED" | translate }}
+        </span>
+      </div>
 
-  <span class="field-msg" *ngIf="isError('privacy')">
-    {{ 'PRIVACY_REQUIRED' | translate }}
-  </span>
-</div>
-
-
-      <!-- SUBMIT -->
       <button
         type="submit"
         class="contact__submit"
@@ -112,10 +110,8 @@
         <ng-container *ngIf="sending">{{ "SENDING" | translate }}</ng-container>
       </button>
 
-      <!-- Honeypot -->
       <input type="text" formControlName="honeypot" style="display: none" />
 
-      <!-- Feedback -->
       <div class="feedback success" *ngIf="submitted && !errorMessage">
         {{ "MESSAGE_SENT" | translate }}
       </div>

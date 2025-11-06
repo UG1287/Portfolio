@@ -1,4 +1,3 @@
-/* Vendor CSS */
 @import "aos/dist/aos.css";
 
 /* =======================
@@ -18,14 +17,12 @@
   --header-h-sm: 109px;
   --gutter: 24px;
 
-  /* Button Tokens */
-  --btn-radius: .7rem;
-  --btn-py: .85rem;
+  --btn-radius: 0.7rem;
+  --btn-py: 0.85rem;
   --btn-px: 1.6rem;
-  --btn-shadow: 0 8px 24px rgba(0,0,0,.18);
-  --btn-shadow-hover: 0 10px 28px rgba(0,0,0,.22);
+  --btn-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --btn-shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.22);
 
-  /* Breakpoints */
   --bp-xl: 1280px;
   --bp-lg: 992px;
   --bp-md: 768px;
@@ -33,27 +30,31 @@
   --bp-xs: 480px;
 }
 
-/* Reset / Consistency */
 *,
 *::before,
-*::after { box-sizing: border-box; }
+*::after {
+  box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
   width: 100%;
   overflow-x: hidden;
 }
 
-/* Layout-Helfer */
 .container {
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: clamp(16px, 3vw, var(--gutter));
 }
 
-section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
+section[id] {
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
 
-/* Base */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -64,9 +65,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a { color: var(--primary); text-decoration: none; }
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
 
-/* Flüssige Typo */
 h1 {
   font-size: clamp(28px, 5vw, 56px);
   line-height: 1.15;
@@ -82,14 +85,14 @@ p {
   line-height: 1.55;
 }
 
-/* Fokus-Styles */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* Medien */
-img, svg {
+img,
+svg {
   max-width: 100%;
   height: auto;
   display: block;
@@ -102,7 +105,7 @@ img, svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
+  gap: 0.5rem;
 
   padding: var(--btn-py) var(--btn-px);
   border: 0;
@@ -117,7 +120,7 @@ img, svg {
   cursor: pointer;
 
   transform-origin: left top;
-  transition: background .18s ease, transform .18s ease, box-shadow .2s ease;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
@@ -126,7 +129,9 @@ img, svg {
   box-shadow: var(--btn-shadow-hover);
 }
 
-.btn:active { transform: translateY(0) scale(0.98); }
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
 
 .btn:focus-visible {
   outline: 2px solid var(--accent);
@@ -135,14 +140,18 @@ img, svg {
 
 .btn[disabled],
 .btn.is-disabled {
-  opacity: .6;
+  opacity: 0.6;
   pointer-events: none;
-  filter: grayscale(.2);
+  filter: grayscale(0.2);
 }
 
 /* Variants */
-.btn--accent { background: var(--accent); }
-.btn--accent:hover { background: var(--primary); }
+.btn--accent {
+  background: var(--accent);
+}
+.btn--accent:hover {
+  background: var(--primary);
+}
 
 .btn--ghost {
   background: transparent;
@@ -151,41 +160,54 @@ img, svg {
   box-shadow: none;
 }
 .btn--ghost:hover {
-  background: rgba(255,255,255,.08);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-1px) scale(1.03);
 }
 
 /* Sizes */
-.btn--sm { --btn-py: .55rem; --btn-px: 1rem; font-size: .9rem; }
-.btn--lg { --btn-py: 1rem;   --btn-px: 2rem; font-size: 1.05rem; }
+.btn--sm {
+  --btn-py: 0.55rem;
+  --btn-px: 1rem;
+  font-size: 0.9rem;
+}
+.btn--lg {
+  --btn-py: 1rem;
+  --btn-px: 2rem;
+  font-size: 1.05rem;
+}
 
 /* ===========================
    Accessibility / Motion
    =========================== */
 @media (prefers-reduced-motion: reduce) {
-  /* Animationen global aus; Transitions ohne !important,
-     damit Komponenten (z.B. .btn) gezielt etwas behalten können */
-  * { animation: none !important; transition: none; }
+  * {
+    animation: none !important;
+    transition: none;
+  }
 
-  /* Buttons behalten sanfte Farb-/Shadow-Übergänge */
-  .btn { transition: background .01s linear, box-shadow .01s linear; }
+  .btn {
+    transition: background 0.01s linear, box-shadow 0.01s linear;
+  }
 }
 
 /* Responsive Offsets */
 @media (max-width: 768px) {
-  section[id] { scroll-margin-top: calc(var(--header-h-sm) + 12px); }
+  section[id] {
+    scroll-margin-top: calc(var(--header-h-sm) + 12px);
+  }
 }
 
-/* Body scroll-lock fürs Mobile-Menu */
-body.no-scroll { overflow: hidden; }
+body.no-scroll {
+  overflow: hidden;
+}
 
-/* Konsistente Interaktions-UX */
-button, [role="button"], a[href] { cursor: pointer; }
-a, button {
-  transition:
-    color 100ms ease,
-    background-color 100ms ease,
-    border-color 100ms ease,
-    transform 100ms ease,
-    box-shadow 100ms ease;
+button,
+[role="button"],
+a[href] {
+  cursor: pointer;
+}
+a,
+button {
+  transition: color 100ms ease, background-color 100ms ease,
+    border-color 100ms ease, transform 100ms ease, box-shadow 100ms ease;
 }

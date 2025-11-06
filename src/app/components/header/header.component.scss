@@ -187,15 +187,15 @@
   @media (max-width: 768px) {
     & {
       height: var(--header-h-sm);
-    } /* bezieht sich auf .header selbst */
+    }
     .nav {
       display: none;
-    } /* Desktop-Nav ausblenden */
+    }
     .burger {
       display: flex;
-    } /* Burger zeigen */
+    }
     .lang-switch {
       display: none;
-    } /* Lang-Switch im Header ausblenden */
+    }
   }
 }

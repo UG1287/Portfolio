@@ -26,10 +26,14 @@
             "inlineStyleLanguage": "scss",
             "baseHref": "/",
             "deployUrl": "/",
-            "assets": ["src/favicon.ico", "src/assets",{ "glob": ".htaccess", "input": "src", "output": "/" },
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              { "glob": ".htaccess", "input": "src", "output": "/" },
               { "glob": "robots.txt", "input": "src", "output": "/" },
-              { "glob": "sitemap.xml", "input": "src", "output": "/" }],
-            "styles": ["src/styles.scss","node_modules/aos/dist/aos.css"],
+              { "glob": "sitemap.xml", "input": "src", "output": "/" }
+            ],
+            "styles": ["src/styles.scss", "node_modules/aos/dist/aos.css"],
             "scripts": ["node_modules/aos/dist/aos.js"],
             "server": "src/main.server.ts",
             "prerender": true,

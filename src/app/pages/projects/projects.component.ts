@@ -2,6 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
+/**
+ * ProjectsComponent
+ *
+ * Displays a list of featured projects with images, technology stacks,
+ * and links to live demos and GitHub repositories.  
+ * Uses translation keys for project descriptions to support internationalization.
+ */
 @Component({
   selector: 'app-projects',
   standalone: true,
@@ -10,6 +17,11 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent {
+  /**
+   * A collection of personal or portfolio projects to showcase in the UI.
+   * Each project contains metadata for title, image, description, tech stack,
+   * and external links to the live version and repository.
+   */
   projects = [
     {
       title: 'El Pollo Loco',

@@ -6,8 +6,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './datenschutz.component.html',
-  styleUrl: './datenschutz.component.scss'
+  styleUrl: './datenschutz.component.scss',
 })
-export class DatenschutzComponent {
-
-}
+export class DatenschutzComponent {}

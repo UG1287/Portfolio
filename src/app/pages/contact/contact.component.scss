@@ -45,7 +45,6 @@
   z-index: 1;
 }
 
-/* ——— title: Linie LINKS statt Unterstrich ——— */
 .contact__title {
   grid-column: 1 / -1;
   display: flex;
@@ -53,7 +52,7 @@
   min-width: 0;
   text-wrap: balance;
   overflow-wrap: break-word;
-  hyphens: auto;  
+  hyphens: auto;
   align-items: center;
   gap: clamp(14px, 2vw, 18px);
 
@@ -92,14 +91,13 @@
 
 /* ——— form ——— */
 .contact__form {
-  width: min(680px, 100%); /* hartes Limit wie im Mock */
-  justify-self: start; /* nicht nach rechts „überlaufen“ */
+  width: min(680px, 100%);
+  justify-self: start;
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px 0;
 }
 
-/* wrapper controls icon + error state */
 .field {
   position: relative;
   margin-bottom: 12px;
@@ -137,13 +135,12 @@
   }
 }
 
-/* inputs — STANDARD lila Rahmen */
 .contact__input,
 .contact__textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 14px 44px 14px 14px; /* room for the icon */
-  border: 2px solid var(--accent); /* ← purple by default */
+  padding: 14px 44px 14px 14px;
+  border: 2px solid var(--accent);
   border-radius: 14px;
   background: #121a29;
   color: var(--text);
@@ -163,21 +160,18 @@
   min-height: 160px;
 }
 
-/* focus = purple glow */
 .contact__input:focus,
 .contact__textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 4px rgba(151, 71, 255, 0.18);
 }
 
-/* invalid+touched = red ring */
 .field.has-error .contact__input,
 .field.has-error .contact__textarea {
   border-color: #ff6b6b !important;
   box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.16) !important;
 }
 
-/* privacy row */
 .field--privacy {
   margin-top: 6px;
 }
@@ -193,7 +187,6 @@
   }
 }
 
-/* submit button (grün wie bei dir aktuell) */
 .contact__submit {
   margin-top: 6px;
   align-self: start;
@@ -232,7 +225,7 @@
 /* ——— responsive ——— */
 @media (max-width: 1200px) {
   .contact__inner {
-    grid-template-columns: 1fr; /* stack */
+    grid-template-columns: 1fr;
     gap: 40px;
   }
   .contact__copy {
@@ -268,14 +261,13 @@
   }
 }
 
-@media (max-width: 420px){
-  .contact__title{
-    font-size: clamp(32px, 9.2vw, 40px); /* a touch smaller than before */
+@media (max-width: 420px) {
+  .contact__title {
+    font-size: clamp(32px, 9.2vw, 40px);
     line-height: 1.05;
   }
-  .contact__title::before{
-    /* make the left purple bar shorter so text has room */
+  .contact__title::before {
     width: clamp(60px, 22vw, 100px);
-    height: 4px;            /* a bit slimmer matches your screenshots */
+    height: 4px;
   }
 }

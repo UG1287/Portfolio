@@ -4,8 +4,22 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
+/**
+ * FieldName
+ *
+ * Represents the available form field names for the contact form.
+ */
 type FieldName = 'name' | 'email' | 'message' | 'privacy';
 
+/**
+ * ContactComponent
+ *
+ * Provides a reactive contact form with validation, spam protection (honeypot),
+ * and asynchronous submission to a backend mail handler.
+ *
+ * Displays validation errors temporarily and provides user feedback
+ * on both success and failure states.
+ */
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -14,33 +28,54 @@ type FieldName = 'name' | 'email' | 'message' | 'privacy';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent {
+  /**
+   * Reactive form group containing all form controls with their validators.
+   */
   contactForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     message: ['', [Validators.required, Validators.minLength(10)]],
     privacy: [false, [Validators.requiredTrue]],
-    honeypot: [''],
+    honeypot: [''], // Hidden spam-prevention field
   });
 
+  /** Indicates if the form was successfully submitted. */
   submitted = false;
+
+  /** Tracks whether a submission request is currently in progress. */
   sending = false;
+
+  /** Stores the translation key for the current error message, if any. */
   errorMessage = '';
 
+  /** Enables mail testing mode to bypass HTTP request logic (for development). */
   mailTest = false;
 
-  // Timer-Logik für Fehleranzeigen (wie bei dir: 5s)
+  /** Duration in milliseconds that an error message remains visible. */
   private readonly ERROR_VISIBLE_MS = 5_000;
+
+  /** Tracks visibility timers for field-level validation errors. */
   private errorUntil: Partial<Record<FieldName, number>> = {};
 
-
+  /**
+   * Creates an instance of ContactComponent.
+   * @param fb Angular FormBuilder for creating reactive form structures.
+   * @param http Angular HttpClient for performing form submission requests.
+   */
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
+  /**
+   * Shortcut getter for direct access to form controls in the template.
+   */
   get f() {
     return this.contactForm.controls;
   }
 
-  // Aufruf im Template z.B. (blur)="showErrorFor('name')", (change)="showErrorFor('privacy')"
-  showErrorFor(field: FieldName) {
+  /**
+   * Marks a field as touched and triggers temporary error visibility if invalid.
+   * @param field - The name of the form field to evaluate.
+   */
+  showErrorFor(field: FieldName): void {
     const ctrl = this.contactForm.get(field);
     if (!ctrl) return;
 
@@ -60,7 +95,11 @@ export class ContactComponent {
     }
   }
 
-  // Für [class.has-error]="isError('name')" etc.
+  /**
+   * Determines whether a field currently displays an error message.
+   * @param field - The name of the form field.
+   * @returns True if the field is invalid and within the visible error window.
+   */
   isError(field: FieldName): boolean {
     const ctrl = this.contactForm.get(field);
     if (!ctrl) return false;
@@ -69,21 +108,31 @@ export class ContactComponent {
     return ctrl.touched && ctrl.invalid && Date.now() < until;
   }
 
-  // Optional: alle Fehlermeldungen gleichzeitig anzeigen (und nach 5s ausblenden)
-  private triggerAllErrors() {
+  /**
+   * Triggers validation for all form fields, used when submitting invalid forms.
+   */
+  private triggerAllErrors(): void {
     (['name', 'email', 'message', 'privacy'] as FieldName[]).forEach((f) =>
       this.showErrorFor(f)
     );
   }
 
-  onSubmit() {
+  /**
+   * Handles the submission of the contact form.
+   * Performs validation, prevents duplicate submissions,
+   * and sends the form data to the backend endpoint.
+   *
+   * In mailTest mode, the submission is simulated locally without an HTTP call.
+   */
+  onSubmit(): void {
     if (this.sending) return;
 
     if (this.contactForm.invalid) {
       this.triggerAllErrors();
       return;
     }
-    if (this.contactForm.value.honeypot) return;
+
+    if (this.contactForm.value.honeypot) return; // Bot protection
 
     const payload = {
       name: this.contactForm.value.name,
@@ -102,7 +151,7 @@ export class ContactComponent {
             this.submitted = true;
             this.contactForm.reset();
             this.sending = false;
-            this.errorUntil = {}; // evtl. noch sichtbare Timer zurücksetzen
+            this.errorUntil = {};
           },
           error: () => {
             this.errorMessage = 'MESSAGE_ERROR';
@@ -110,7 +159,7 @@ export class ContactComponent {
           },
         });
     } else {
-      // Testmodus (ohne Netzwerk)
+      // Simulated success for testing
       this.submitted = true;
       this.contactForm.reset();
       this.sending = false;
@@ -118,10 +167,18 @@ export class ContactComponent {
     }
   }
 
-  // deine Mail-Einstellungen
+  /**
+   * Defines configuration for the HTTP POST request used in form submission.
+   */
   post = {
+    /** The endpoint to which the form data will be sent. */
     endPoint: '/sendMail.php',
+    /**
+     * Serializes the payload to a JSON string.
+     * @param payload - The form data object.
+     */
     body: (payload: any) => JSON.stringify(payload),
+    /** HTTP options including headers and response type. */
     options: {
       headers: { 'Content-Type': 'text/plain' },
       responseType: 'text' as const,

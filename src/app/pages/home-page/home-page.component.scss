@@ -6,28 +6,27 @@
   position: relative;
   color: var(--text);
   overflow: hidden;
-  isolation: isolate; /* saubere Layer */
+  isolation: isolate;
 
   .container {
     max-width: var(--container-max);
     margin-inline: auto;
   }
-  .hero__headline{
-    display: inline-grid;                   /* statt full-width grid */
+  .hero__headline {
+    display: inline-grid;
     grid-template-columns: auto 1fr;
     align-items: center;
     column-gap: clamp(16px, 2.5vw, 32px);
-    width: max-content;                     /* Breite = Inhalt */
-    max-width: 100%;                        /* brich sauber um, falls nötig */
-    margin-inline: auto;                    /* zentriert in der Hero */
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
   }
 
-  /* Innerer Rahmen – sorgt für echtes Zentrieren bei max 1100px Breite */
   .hero__inner {
     position: static;
     z-index: 2;
     width: 100%;
-    max-width: 1100px; /* ≈ Vorlage */
+    max-width: 1100px;
     margin-inline: auto;
     display: grid;
     place-items: center;
@@ -36,8 +35,7 @@
     padding-block: clamp(32px, 6vh, 72px);
   }
 
-  /* Vertikales "I am" links vom Block, nicht über der Headline */
-  .hero__iam{
+  .hero__iam {
     position: static;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
@@ -47,98 +45,96 @@
     line-height: 1;
     white-space: nowrap;
 
-    align-self: stretch;                    /* gleiche Höhe wie H1+H2 */
+    align-self: stretch;
     display: flex;
-    align-items: center;                    /* vertikal mittig */
+    align-items: center;
   }
 
   .hero__titles {
-    position: relative;          /* Anker für das vertikale „I am“ */
-    /* optional: wenn du den linken Einzug nur für die Titel willst,
-       kannst du stattdessen hier padding-left setzen und in .hero__copy entfernen */
-    /* padding-left: var(--iam-gutter); */
+    position: relative;
   }
 
-  /* Headline/Unterzeile/CTA */
-  .hero__copy{
-    padding-left: 0;                        /* <— wichtig */
-    text-align: center;                     /* wie in deinem Design */
-    h1{
+  .hero__copy {
+    padding-left: 0;
+    text-align: center;
+    h1 {
       margin: 0;
       font-weight: 800;
-      letter-spacing: .2px;
+      letter-spacing: 0.2px;
       line-height: 1.1;
       font-size: clamp(36px, 6.2vw, 90px);
     }
-    h2{
+    h2 {
       margin: 6px 0 0;
       font-weight: 400;
       color: var(--accent);
-      letter-spacing: .5px;
+      letter-spacing: 0.5px;
       line-height: 1.2;
       font-size: clamp(18px, 3.2vw, 48px);
     }
   }
 
+  > .hero__social-strip {
+    position: absolute;
+    left: var(--safe-x, clamp(12px, 3vw, 32px));
+    bottom: clamp(28px, 8vh, 64px);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    z-index: 3;
 
+    .strip {
+      width: clamp(48px, 6vw, 100px);
+      height: 4px;
+      background: var(--primary);
+    }
 
-  /* Social strip – clean, fixed size, no chip/box shadow */
-> .hero__social-strip {
-  position: absolute;
-  left: var(--safe-x, clamp(12px, 3vw, 32px));
-  bottom: clamp(28px, 8vh, 64px);
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  z-index: 3;
+    .icons {
+      display: flex;
+      gap: 14px;
+    }
 
-  .strip {
-    width: clamp(48px, 6vw, 100px);
-    height: 4px;
-    background: var(--primary);
+    .icons a,
+    .icons a:hover,
+    .icons a:focus,
+    .icons a:active {
+      display: inline-grid;
+      place-items: center;
+
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+
+      background: transparent !important;
+      box-shadow: none !important;
+      border: 0;
+      border-radius: 0;
+      outline: none;
+
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .icons img {
+      width: 30px;
+      height: 30px;
+      display: block;
+      opacity: 0.9;
+      transform-origin: center;
+      transform: scale(1);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .icons a:hover img,
+    .icons a:focus img {
+      opacity: 1;
+      transform: scale(1.3333);
+    }
+
+    .icons a:focus-visible img {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
   }
-
-  .icons { display: flex; gap: 14px; }
-
-  .icons a,
-  .icons a:hover,
-  .icons a:focus,
-  .icons a:active {
-    display: inline-grid;
-    place-items: center;
-
-    /* fixed size – prevents hover “jump” */
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-
-    /* no chip/no shadow */
-    background: transparent !important;
-    box-shadow: none !important;
-    border: 0;
-    border-radius: 0;
-    outline: none;
-
-    transition: transform .15s ease, opacity .15s ease;
-  }
-
-  .icons img {
-    width: 30px;
-    height: 30px;
-    display: block;
-    opacity: .9;
-    transform-origin: center;
-    transform: scale(1);  
-    transition: opacity .15s ease, transform .15s ease;
-  }
-
-  .icons a:hover img,
-  .icons a:focus img { opacity: 1; transform: scale(1.3333); }
-
-  /* optional keyboard focus ring on the glyph itself */
-  .icons a:focus-visible img { outline: 2px solid var(--accent); outline-offset: 3px; }
-}
-
 
   .hero__decor {
     position: absolute;
@@ -189,7 +185,6 @@
   }
 }
 
-/* Breakpoints */
 @media (max-width: 992px) {
   .hero {
     min-height: calc(100dvh - var(--header-h-sm));
@@ -212,33 +207,29 @@
   }
 }
 
-/* ====== Mobile polish (<= 480px) ====== */
 @media (max-width: 480px) {
   .hero {
-    /* etwas mehr Luft, damit nichts klemmt */
     min-height: calc(100dvh - var(--header-h-sm));
     padding-inline: max(14px, env(safe-area-inset-left), 4vw);
-    padding-bottom: 90px; /* Platz über den Social-Icons */
+    padding-bottom: 90px;
 
-    /* der innere Block bleibt zentriert & kompakt */
     .hero__inner {
-      max-width: 340px;         /* realistische Lesebreite */
+      max-width: 340px;
       gap: 12px;
       padding-block: clamp(24px, 5vh, 56px);
     }
 
-    /* Headline-Zeile: "I am" links, Titel rechts */
     .hero__headline {
       grid-template-columns: auto 1fr;
       column-gap: 12px;
-      width: 100%;              /* darf umbrechen */
-      justify-content: center;  /* Block in der Mitte halten */
+      width: 100%;
+      justify-content: center;
     }
 
     .hero__iam {
       font-size: clamp(24px, 5.6vw, 30px);
-      letter-spacing: .02em;
-      /* gleiche Höhe wie die Titelspalte, nicht abgeschnitten */
+      letter-spacing: 0.02em;
+
       align-self: stretch;
       display: flex;
       align-items: center;
@@ -250,7 +241,7 @@
       h1 {
         font-size: clamp(28px, 9.5vw, 38px);
         line-height: 1.1;
-        letter-spacing: .2px;
+        letter-spacing: 0.2px;
       }
       h2 {
         font-size: clamp(12px, 4.6vw, 16px);
@@ -259,14 +250,12 @@
       }
     }
 
-    /* CTA kompakter wie im Mock */
     .btn {
       font-size: 14px;
       padding: 12px 18px;
       border-radius: 10px;
     }
 
-    /* Glows kleiner & näher an die Ecken geschoben */
     .hero__glow--tl {
       left: -140px;
       top: 40px;
@@ -279,41 +268,71 @@
       height: auto;
     }
 
-    /* Scroll-Hinweis ausblenden (du hast das bereits) */
-    .scroll-down { display: none; }
+    .scroll-down {
+      display: none;
+    }
 
-    /* Social-Strip unten MITTE (wie im Screenshot),
-       Icons bleiben 30px, der grüne Balken kürzer */
     > .hero__social-strip {
       left: 50%;
       transform: translateX(-50%);
       bottom: 20px;
       gap: 12px;
 
-      .strip { width: 36px; }
-      .icons { gap: 14px; }
-      .icons a {
-        width: 40px; height: 40px; /* fixe Hitbox verhindert „Sprünge“ */
+      .strip {
+        width: 36px;
       }
-      .icons img { width: 30px; height: 30px; }
+      .icons {
+        gap: 14px;
+      }
+      .icons a {
+        width: 40px;
+        height: 40px;
+      }
+      .icons img {
+        width: 30px;
+        height: 30px;
+      }
     }
   }
 }
 
-/* ====== Extra eng (<= 360px / 320px) ====== */
 @media (max-width: 360px) {
   .hero {
-    .hero__inner { max-width: 320px; gap: 10px; }
-    .hero__headline { column-gap: 10px; }
-    .hero__iam { font-size: 24px; font-weight: 400; }
-    .hero__copy {
-      h1 { font-size: clamp(18px, 10vw, 26px); }
-      h2 { font-size: clamp(12px, 4.4vw, 16px); }
+    .hero__inner {
+      max-width: 320px;
+      gap: 10px;
     }
-    .btn { font-size: 13px; padding: 10px 16px; }
-    .hero__glow--tl { left: -50px; top: 12px; width: 200px; }
-    .hero__glow--tr { right: -10px; top: 100px; width: 100px; }
-    > .hero__social-strip { bottom: 18px; }
+    .hero__headline {
+      column-gap: 10px;
+    }
+    .hero__iam {
+      font-size: 24px;
+      font-weight: 400;
+    }
+    .hero__copy {
+      h1 {
+        font-size: clamp(18px, 10vw, 26px);
+      }
+      h2 {
+        font-size: clamp(12px, 4.4vw, 16px);
+      }
+    }
+    .btn {
+      font-size: 13px;
+      padding: 10px 16px;
+    }
+    .hero__glow--tl {
+      left: -50px;
+      top: 12px;
+      width: 200px;
+    }
+    .hero__glow--tr {
+      right: -10px;
+      top: 100px;
+      width: 100px;
+    }
+    > .hero__social-strip {
+      bottom: 18px;
+    }
   }
 }
-

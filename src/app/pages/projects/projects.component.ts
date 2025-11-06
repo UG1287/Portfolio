@@ -24,7 +24,7 @@ export class ProjectsComponent {
       image: 'assets/img/join.png',
       descriptionKey: 'PROJECT_JOIN_DESC',
       stack: ['Angular', 'TypeScript', 'API'],
-      liveLink: '/apps/join/',
+      liveLink: '/apps/join/login.html',
       repoLink: 'https://github.com/deinGithub/weather-app',
     },
   ];

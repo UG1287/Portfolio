@@ -1,40 +1,51 @@
 <section class="about" id="about">
   <div class="container">
-  <div class="about__grid">
-    <!-- Text -->
-    <div class="about__copy" data-aos="fade-right">
-      <h2 class="about__title">{{ 'ABOUT_ME' | translate }}</h2>
+    <div class="about__grid">
+      <!-- Text -->
+      <div class="about__copy" data-aos="fade-right">
+        <h2 class="about__title">{{ "ABOUT_ME" | translate }}</h2>
 
-      <p class="about__lead">{{ 'ABOUT_TEXT_1' | translate }}</p>
-      <p>{{ 'ABOUT_TEXT_2' | translate }}</p>
+        <p class="about__lead">{{ "ABOUT_TEXT_1" | translate }}</p>
+        <p>{{ "ABOUT_TEXT_2" | translate }}</p>
 
-      <a
-        href="#skills"
-        class="about__cta"
-        (click)="scrollTo('skills', $event)"
-      >
-        {{ 'SEE_MY_SKILLS' | translate }}
-      </a>
-    </div>
-
-    <!-- Bild -->
-    <div class="about__visual" data-aos="fade-left">
-      <!-- optional: lila Glow aus dem Figma-Export -->
-      <img src="assets/shadows/Purpleshadow2.svg" alt="" class="about__glow" aria-hidden="true" />
-
-      <div class="about__portraitWrap">
-        <img
-          src="assets/img/UgursayohneHintergrund.png"
-          alt="Uğursay Pürçek"
-          class="about__portrait"
-          width="370" height="370"
-          loading="lazy" decoding="async"
-        />
-        <span class="about__ring" aria-hidden="true"></span>
+        <a
+          href="#skills"
+          class="btn about__cta"
+          (click)="scrollTo('skills', $event)"
+        >
+          {{ "SEE_MY_SKILLS" | translate }}
+        </a>
       </div>
 
-      <span class="about__line" aria-hidden="true"></span>
+      <!-- Visual -->
+      <div class="about__visual" data-aos="fade-left" aria-hidden="true">
+        <!-- correct glow: behind portrait -->
+        <img
+          class="about__glow"
+          src="assets/shadows/portraitshadow.svg"
+          alt=""
+        />
+        <!-- portrait -->
+        <img
+          class="about__portrait"
+          src="assets/img/UgursayohneHintergrund.png"
+          alt="Uğursay Pürçek"
+          width="646"
+          height="705"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="about__curve about__curve--visual"
+          src="assets/shadows/curvedabout.svg"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
     </div>
   </div>
-  </div>
+<!-- Desktop curve (spans the section width) -->
+  <img class="about__curve about__curve--section"
+       src="assets/shadows/curvedabout.svg"
+       alt="" aria-hidden="true" />
 </section>

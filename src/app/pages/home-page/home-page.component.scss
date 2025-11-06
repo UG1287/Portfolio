@@ -163,8 +163,9 @@
   }
   .hero__glow--tr {
     right: -40px;
-    top: 60px;
+    top: 20px;
     width: clamp(340px, 36vw, 500px);
+    height: 500px;
   }
 
   .scroll-down {
@@ -210,3 +211,109 @@
     bottom: 24px;
   }
 }
+
+/* ====== Mobile polish (<= 480px) ====== */
+@media (max-width: 480px) {
+  .hero {
+    /* etwas mehr Luft, damit nichts klemmt */
+    min-height: calc(100dvh - var(--header-h-sm));
+    padding-inline: max(14px, env(safe-area-inset-left), 4vw);
+    padding-bottom: 90px; /* Platz über den Social-Icons */
+
+    /* der innere Block bleibt zentriert & kompakt */
+    .hero__inner {
+      max-width: 340px;         /* realistische Lesebreite */
+      gap: 12px;
+      padding-block: clamp(24px, 5vh, 56px);
+    }
+
+    /* Headline-Zeile: "I am" links, Titel rechts */
+    .hero__headline {
+      grid-template-columns: auto 1fr;
+      column-gap: 12px;
+      width: 100%;              /* darf umbrechen */
+      justify-content: center;  /* Block in der Mitte halten */
+    }
+
+    .hero__iam {
+      font-size: clamp(24px, 5.6vw, 30px);
+      letter-spacing: .02em;
+      /* gleiche Höhe wie die Titelspalte, nicht abgeschnitten */
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__copy {
+      text-align: center;
+      white-space: nowrap;
+      h1 {
+        font-size: clamp(28px, 9.5vw, 38px);
+        line-height: 1.1;
+        letter-spacing: .2px;
+      }
+      h2 {
+        font-size: clamp(12px, 4.6vw, 16px);
+        margin-top: 6px;
+        line-height: 1.25;
+      }
+    }
+
+    /* CTA kompakter wie im Mock */
+    .btn {
+      font-size: 14px;
+      padding: 12px 18px;
+      border-radius: 10px;
+    }
+
+    /* Glows kleiner & näher an die Ecken geschoben */
+    .hero__glow--tl {
+      left: -140px;
+      top: 40px;
+      width: 320px;
+    }
+    .hero__glow--tr {
+      right: -120px;
+      top: 80px;
+      width: 300px;
+      height: auto;
+    }
+
+    /* Scroll-Hinweis ausblenden (du hast das bereits) */
+    .scroll-down { display: none; }
+
+    /* Social-Strip unten MITTE (wie im Screenshot),
+       Icons bleiben 30px, der grüne Balken kürzer */
+    > .hero__social-strip {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 20px;
+      gap: 12px;
+
+      .strip { width: 36px; }
+      .icons { gap: 14px; }
+      .icons a {
+        width: 40px; height: 40px; /* fixe Hitbox verhindert „Sprünge“ */
+      }
+      .icons img { width: 30px; height: 30px; }
+    }
+  }
+}
+
+/* ====== Extra eng (<= 360px / 320px) ====== */
+@media (max-width: 360px) {
+  .hero {
+    .hero__inner { max-width: 320px; gap: 10px; }
+    .hero__headline { column-gap: 10px; }
+    .hero__iam { font-size: 24px; font-weight: 400; }
+    .hero__copy {
+      h1 { font-size: clamp(18px, 10vw, 26px); }
+      h2 { font-size: clamp(12px, 4.4vw, 16px); }
+    }
+    .btn { font-size: 13px; padding: 10px 16px; }
+    .hero__glow--tl { left: -50px; top: 12px; width: 200px; }
+    .hero__glow--tr { right: -10px; top: 100px; width: 100px; }
+    > .hero__social-strip { bottom: 18px; }
+  }
+}
+

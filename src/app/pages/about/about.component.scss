@@ -1,149 +1,161 @@
-:root{
-  --primary:#70E61C;
-  --accent:#9747FF;
-  --bg:#141D2F;
-  --text:#f1f5f9;
-  --shadow:rgba(0,0,0,.35);
+/* ===== Section ===== */
+.about {
+  /* tune once; they control depth & size of the dip into Skills */
+  --curve-h: clamp(160px, 18vw, 320px); /* visual curve height */
+  --curve-dip: calc(var(--curve-h) * 0.3); /* how far it dips over Skills */
+  --curve-shift-desktop: 12vw; /* crest nudge under portrait on desktop */
+
+  position: relative;
+  isolation: isolate; /* ensure clean z-index stacking */
+  color: var(--text);
+  padding-block: clamp(72px, 8vw, 140px);
+  padding-bottom: calc(56px + var(--curve-dip)); /* avoid overlap with copy */
+  overflow: visible;
+}
+
+/* Use the global .container (max 1440px) */
+.container {
+  max-width: var(--container-max);
+}
+
+.about__copy {
+  z-index: 4;
 }
 
 /* ===== Layout ===== */
-.about{
-  position: relative;
-  background: transparent;      /* Hero-Welle darf durchlaufen */
-  color: var(--text);
-  padding-block: clamp(64px, 9vw, 140px);
-  overflow: visible;
-  z-index: 1;
-}
-
-.about__grid{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+.about__grid {
   display: grid;
-  grid-template-columns: 1.08fr 1fr;
+  grid-template-columns: 1.05fr 1fr; /* text | visual */
   align-items: center;
-  gap: clamp(24px, 6vw, 64px);
-  column-gap: 64px;
+  gap: clamp(24px, 5vw, 64px);
 }
 
 /* ===== Text ===== */
-.about__title{
-  margin: 0 0 24px;
-  font-family: Poppins, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 64px;
-  line-height: 1.1;
+.about__title {
+  margin: 0 0 18px;
+  font: 800 clamp(36px, 6vw, 64px) / 1.1 "Poppins", sans-serif;
 }
-.about__lead{
+.about__lead {
   margin: 0 0 16px;
-  max-width: 460px;
-  opacity: .92;
+  max-width: 52ch;
+  opacity: 0.92;
 }
-.about__cta{
-  display: inline-block;
+.about__cta {
   margin-top: 18px;
-  padding: 12px 20px;
-  background: #70E61C;          /* feste Farbe -> keine Linter-Warnung */
-  color: #0b0f17;
-  font-weight: 700;
-  text-decoration: none;
-  border-radius: 10px;
-  box-shadow: 0 10px 26px rgba(112,230,28,.28);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-  &:hover{
-    transform: translateY(-1px);
-    background: #7df537;
-    box-shadow: 0 12px 28px rgba(112,230,28,.35);
-  }
 }
 
-/* ===== Visual (Ring + Portrait + Glow + Linie) ===== */
-$ring-d: clamp(280px, 34vw, 450px);      /* Durchmesser Ring */
-$ring-stroke: 4px;   /* Strichstärke Ring / Linie */
-$portrait-d: 430px;  /* Durchmesser Portrait */
-
-.about__visual{
+/* ===== Visual (glow + portrait) ===== */
+.about__visual {
   position: relative;
+  min-height: clamp(360px, 42vw, 720px);
   display: grid;
   place-items: center;
-  z-index: 1; /* Inhalt über der Hero-Welle */
+  z-index: 1; /* above the wave */
 }
 
-/* optionaler lila Glow */
-.about__glow{
+/* the required glow (exact size & behind portrait) */
+.about__glow {
   position: absolute;
-  right: -20vw;      /* feinjustieren bis es sitzt */
-  top: -200px;
-  width: 407px;      /* Figma: 407 × 608 */
-  height: 608px;
+  width: 634px; /* fixed per request */
+  height: 616px;
+  inset: auto auto 8% 6%; /* bottom/left offset – tweak if needed */
+  object-fit: contain;
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  z-index: 0; /* behind portrait */
+  pointer-events: none;
+}
+
+/* big portrait */
+.about__portrait {
+  position: relative;
+  z-index: 2;
+  width: clamp(380px, 33vw, 647px);
+  height: auto;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.35));
+}
+
+/* ===== Curves (shared basics) ===== */
+.about__curve {
+  display: block;
   pointer-events: none;
   user-select: none;
-  z-index: 0;        /* hinter Ring/Portrait/Linie */
-}
-
-.about__portraitWrap{
-  position: relative;
-  width: $ring-d;
-  height: $ring-d;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-}
-
-.about__portrait{
-  width: $portrait-d;
-  height: $portrait-d;
+  height: auto;
+  aspect-ratio: 1440px / 878.5px; /* match your Figma export viewBox */
   object-fit: cover;
-  border-radius: 50%;
-  filter: drop-shadow(0 14px 26px var(--shadow));
-  z-index: 2;
+  object-position: bottom center;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.25));
 }
 
-.about__ring{
+/* Desktop curve — belongs to the section, spans section width */
+.about__curve--section {
   position: absolute;
-  inset: 0;
-  border: $ring-stroke solid var(--primary);
-  border-radius: 50%;
-  z-index: 1;
-  pointer-events: none;
+  left: 50%;
+  bottom: calc(-5.5 * var(--curve-dip));
+  transform: translateX(-50%); /* center to the SECTION */
+  width: min(
+    100%,
+    var(--container-max)
+  ); /* full section width, capped at 1440px */
+  z-index: 3; /* above portrait, below copy */
 }
 
-/* Linie an der rechten Ring-Tangente (Ringmitte + Radius) */
-/* Feintuning-Variable für die Ansatzstelle */
-$line-nudge: calc(#{$ring-stroke} / 2 + 2px);
-
-.about__line{
+/* Mobile curve — belongs to the portrait cell, sticks to its bottom */
+.about__curve--visual {
   position: absolute;
-  left: calc(50% + (#{$ring-d} / 2) - #{$line-nudge}); /* <- hier */
-  top: 52%;
-  width: 100vw;
-  height: $ring-stroke;
-  background: var(--primary);
-  border-radius: 2px;
-  transform: translateY(-50%);
-  z-index: 1;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%); /* center inside the visual column */
+  width: 100%; /* match the column width */
+  z-index: 2; /* above portrait */
 }
 
-
-/* ===== einfache Responsive-Anpassungen ===== */
-@media (max-width: 1280px){
-  .about__grid{ column-gap: 48px; }
-  .about__title{ font-size: 56px; }
-}
-@media (max-width: 980px){
-  .about{
-    padding: 96px 0;
+/* ===== Responsive ===== */
+@media (min-width: 1201px) {
+  .about__curve--section {
+    display: block;
   }
-  .about__grid{
+  .about__curve--visual {
+    display: none;
+  }
+  /* optional: nudge the crest under the portrait */
+  .about__curve--section {
+    object-position: bottom calc(50% + var(--curve-shift-desktop));
+  }
+}
+
+@media (max-width: 1200px) {
+  .about__grid {
     grid-template-columns: 1fr;
-    row-gap: 48px;
+    row-gap: 40px;
   }
-  .about__visual{ order: -1; margin-inline: auto; }
-  .about__copy{ order: 2; }
-  .about__line{ display: none; }      /* Mobile: Linie aus */
+  .about__visual {
+    order: -1;
+  }
+  .about__curve--section {
+    display: none;
+    bottom: calc(-6.6 * var(--curve-dip));
+  }
+  .about__curve--visual {
+    display: block;
+    bottom: calc(-6.6 * var(--curve-dip));
+  }
+}
+
+@media (max-width: 640px) {
+  .about {
+    --curve-h: clamp(140px, 22vw, 240px);
+  }
+  .about__curve--visual {
+    bottom: calc(-2 * var(--curve-dip));
+  }
+  .about__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .about__glow{
-    right: -80px; top: -20px; width: 300px; height: 448px; opacity: .9;
+    top: -90px;
   }
 }

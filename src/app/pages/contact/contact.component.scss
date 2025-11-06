@@ -48,7 +48,12 @@
 /* ——— title: Linie LINKS statt Unterstrich ——— */
 .contact__title {
   grid-column: 1 / -1;
-  display: flex; /* Linie links neben Text */
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;  
   align-items: center;
   gap: clamp(14px, 2vw, 18px);
 
@@ -260,5 +265,17 @@
   }
   .contact__form {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 420px){
+  .contact__title{
+    font-size: clamp(32px, 9.2vw, 40px); /* a touch smaller than before */
+    line-height: 1.05;
+  }
+  .contact__title::before{
+    /* make the left purple bar shorter so text has room */
+    width: clamp(60px, 22vw, 100px);
+    height: 4px;            /* a bit slimmer matches your screenshots */
   }
 }

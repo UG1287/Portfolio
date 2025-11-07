@@ -2,6 +2,7 @@
   --curve-h: clamp(160px, 18vw, 320px);
   --curve-dip: calc(var(--curve-h) * 0.3);
   --curve-shift-desktop: 12vw;
+  --curve-offset: clamp(56px, 9vw, 140px);
   position: relative;
   isolation: isolate;
   color: var(--text);
@@ -46,6 +47,7 @@
   display: grid;
   place-items: center;
   z-index: 1;
+  padding-bottom: var(--curve-offset);
 }
 
 .about__glow {
@@ -107,10 +109,19 @@
 .about__curve--visual {
   position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: calc(-0.48 * var(--curve-offset));
   transform: translateX(-50%);
   width: 100%;
   z-index: 2;
+}
+
+@media (min-width: 1500px) {
+  .about {
+    --curve-offset: 2px;
+  }
+  .about__curve--visual {
+    bottom: calc(-0.45 * var(--curve-offset));
+  }
 }
 
 @media (min-width: 1201px) {
@@ -128,6 +139,9 @@
 }
 
 @media (max-width: 1200px) {
+  .about {
+    --curve-offset: clamp(84px, 12vw, 160px);
+  }
   .about__grid {
     grid-template-columns: 1fr;
     row-gap: 40px;
@@ -139,22 +153,40 @@
 
   .about__curve--section {
     display: none;
-    bottom: calc(-6.6 * var(--curve-dip));
+  }
+
+  .about__curve {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 32%,
+      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 0.4) 70%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 32%,
+      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 0.4) 70%,
+      transparent 100%
+    );
   }
 
   .about__curve--visual {
     display: block;
-    bottom: calc(-6.6 * var(--curve-dip));
+    bottom: calc(-2.6 * var(--curve-offset));
   }
 }
 
 @media (max-width: 640px) {
   .about {
-    --curve-h: clamp(140px, 22vw, 240px);
+    --curve-offset: clamp(100px, 18vw, 200px);
   }
 
   .about__curve--visual {
-    bottom: calc(-2 * var(--curve-dip));
+    bottom: calc(-0.6 * var(--curve-offset));
   }
 
   .about__copy {
@@ -166,5 +198,29 @@
 
   .about__glow {
     top: -90px;
+  }
+}
+
+@media (max-width: 430px) {
+  .about__curve {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 32%,
+      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 0.4) 70%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 32%,
+      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 0.4) 70%,
+      transparent 100%
+    );
+  }
+  .about__curve--visual {
+    bottom: calc(-0.2 * var(--curve-offset));
   }
 }

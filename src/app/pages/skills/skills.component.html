@@ -1,6 +1,5 @@
 <section class="skills" id="skills">
   <div class="skills__inner">
-    <!-- ICON-GRID links -->
     <div class="skills__grid" data-aos="fade-right">
       <div class="skill" *ngFor="let s of skills" [class.is-learning]="s.key === 'learning'">
         <div class="skill__tile" tabindex="0">
@@ -17,7 +16,6 @@
 
         <span class="skill__name">{{ s.name }}</span>
 
-        <!-- Tooltip nur beim Learning-Item -->
         <div class="skill__tooltip" *ngIf="s.tooltip">
           <div class="st__title">{{ s.tooltip.title }}</div>
           <div class="st__badges">
@@ -30,7 +28,6 @@
       </div>
     </div>
 
-    <!-- COPY / CTA rechts -->
     <div class="skills__copy" data-aos="fade-left">
       <h2 class="skills__title">{{ 'SKILLS' | translate }}</h2>
 

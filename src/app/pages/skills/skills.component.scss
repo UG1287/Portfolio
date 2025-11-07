@@ -207,6 +207,11 @@
   .skills__grid {
     justify-items: center;
   }
+  .skills__copy .btn {
+    display: block;               /* margin auto works on block-level */
+    inline-size: fit-content;     /* shrink to content */
+    margin: 12px auto 0;          /* center horizontally */
+  }
 }
 
 @media (max-width: 600px) {
@@ -215,5 +220,17 @@
   }
   .skills__title::after {
     max-width: 220px;
+  }
+  .skills__copy .btn {
+    display: block;               /* margin auto works on block-level */
+    inline-size: fit-content;     /* shrink to content */
+    margin: 12px auto 0;          /* center horizontally */
+  }
+}
+
+@media (max-width: 420px) {
+  .skills__copy .btn {
+    max-width: 100%;
+    text-align: center;           /* falls der Text umbrechen muss */
   }
 }

@@ -1,5 +1,5 @@
 .hero {
-  min-height: calc(100dvh - var(--header-h));
+  min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: clamp(16px, 3vw, 32px);
@@ -7,6 +7,9 @@
   color: var(--text);
   overflow: hidden;
   isolation: isolate;
+  @supports (height: 100svh) {
+    min-height: 100svh;
+  }
 
   .container {
     max-width: var(--container-max);
@@ -187,7 +190,10 @@
 
 @media (max-width: 992px) {
   .hero {
-    min-height: calc(100dvh - var(--header-h-sm));
+    min-height: 100dvh;
+    @supports (height: 100svh) {
+      min-height: 100svh;
+    }
   }
   .hero .hero__inner {
     padding-block: clamp(24px, 5vh, 56px);
@@ -209,7 +215,10 @@
 
 @media (max-width: 480px) {
   .hero {
-    min-height: calc(100dvh - var(--header-h-sm));
+    min-height: 100dvh;
+    @supports (height: 100svh) {
+      min-height: 100svh;
+    }
     padding-inline: max(14px, env(safe-area-inset-left), 4vw);
     padding-bottom: 90px;
 
@@ -336,3 +345,4 @@
     }
   }
 }
+

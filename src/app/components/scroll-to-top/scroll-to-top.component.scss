@@ -1,40 +1,38 @@
 .scroll-wrap {
+  /* kann bleiben – hat auf den fixed-Button aber keinen Einfluss */
   position: relative;
   display: flex;
   justify-content: flex-end;
 }
 
+/* Button an Containerkante “snappen” */
 .scroll-btn {
   position: fixed;
-  bottom: max(calc(19rem + 2px), calc(env(safe-area-inset-bottom) + 16px));
-  margin-right: 1.3rem;
+  right: calc(var(--safe-x) + clamp(12px, 2vw, 24px)); /* innen an Containerkante */
+  bottom: clamp(320px, 6vh, 320px);                       /* normaler Abstand nach unten */
   width: 39px;
   height: 39px;
   background: transparent;
   border: 0;
   padding: 0;
   cursor: pointer;
-  z-index: 999;
-
-  .arrow-icon {
-    width: 100%;
-    height: 100%;
-  }
-
-  .circle,
-  .arrow {
-    stroke: #ffffff;
-    transition: stroke 0.3s ease;
-  }
-
-  &:hover .circle,
-  &:hover .arrow {
-    stroke: var(--primary);
-  }
+  z-index: 2000; /* über allem */
+  /* WICHTIG: margin-right entfernen */
 }
 
+.scroll-btn .arrow-icon { width: 100%; height: 100%; }
+.scroll-btn .circle,
+.scroll-btn .arrow {
+  stroke: #fff;
+  transition: stroke .3s ease;
+}
+.scroll-btn:hover .circle,
+.scroll-btn:hover .arrow { stroke: var(--primary); }
+
+/* Mobile: sichtbar & bündig am Rand, mit Notch-Reserve */
 @media (max-width: 768px) {
   .scroll-btn {
-    display: none;
+    right: 16px;
+    bottom: clamp(200px, 6vh, 220px);  
   }
 }

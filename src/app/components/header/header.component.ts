@@ -75,17 +75,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   * Handles navigation link clicks by scrolling to the target section
-   * and closing the mobile menu afterward.
-   *
-   * @param event - The click event from a navigation link.
-   * @param id - The target section ID to scroll to.
-   */
-  navigate(event: Event, id: string): void {
-    this.scrollToSection(event, id);
-    this.closeMenu();
-  }
+  
 
   /**
    * Lifecycle hook that initializes an IntersectionObserver

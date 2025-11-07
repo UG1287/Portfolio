@@ -1,11 +1,18 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { ImpressumComponent } from './pages/impressum/impressum.component';
-import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'impressum', component: ImpressumComponent },
-  { path: 'datenschutz', component: DatenschutzComponent },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'impressum',
+    loadComponent: () =>
+      import('./pages/impressum/impressum.component').then(m => m.ImpressumComponent),
+  },
+  {
+    path: 'datenschutz',
+    loadComponent: () =>
+      import('./pages/datenschutz/datenschutz.component').then(m => m.DatenschutzComponent),
+  },
+  { path: '**', redirectTo: '' },
 ];

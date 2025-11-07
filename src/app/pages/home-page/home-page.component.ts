@@ -1,10 +1,5 @@
 import { Component, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import {
-  CommonModule,
-  NgOptimizedImage,
-  isPlatformBrowser,
-  DOCUMENT,
-} from '@angular/common';
+import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
@@ -34,7 +29,6 @@ import { ContactComponent } from '../contact/contact.component';
     SkillsComponent,
     ProjectsComponent,
     ContactComponent,
-    NgOptimizedImage,
   ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],

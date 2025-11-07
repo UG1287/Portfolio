@@ -52,6 +52,11 @@ section[id] {
   scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
+main{
+  display: block;
+  min-height: calc(100dvh - var(--header-h) - 291px);  /* 291px = footer */
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -210,4 +215,26 @@ a,
 button {
   transition: color 100ms ease, background-color 100ms ease,
     border-color 100ms ease, transform 100ms ease, box-shadow 100ms ease;
+}
+
+app-layout {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-layout > main {
+  flex: 1 0 auto;
+}
+
+@supports not (height: 100dvh) {
+  app-layout {
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 768px){
+  main{
+    min-height: calc(100dvh - var(--header-h-sm) - 291px);
+  }
 }

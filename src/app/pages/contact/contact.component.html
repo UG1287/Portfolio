@@ -85,21 +85,31 @@
       </div>
 
       <div class="field field--privacy" [class.has-error]="isError('privacy')">
-        <label class="contact__privacy">
-          <input
-            type="checkbox"
-            formControlName="privacy"
-            (blur)="showErrorFor('privacy')"
-            (change)="showErrorFor('privacy')"
-            [attr.aria-invalid]="isError('privacy')"
-          />
-          <span [innerHTML]="'PRIVACY_TEXT' | translate"></span>
-        </label>
+  <!-- Input separat, mit for-Verbindung -->
+  <input
+    id="privacy"
+    type="checkbox"
+    formControlName="privacy"
+    (blur)="showErrorFor('privacy')"
+    (change)="showErrorFor('privacy')"
+    [attr.aria-invalid]="isError('privacy')"
+  />
 
-        <span class="field-msg" *ngIf="isError('privacy')">
-          {{ "PRIVACY_REQUIRED" | translate }}
-        </span>
-      </div>
+  <label for="privacy" class="contact__privacy">
+    <span>{{ 'PRIVACY_PREFIX' | translate }}</span>
+    <a
+      [routerLink]="'/datenschutz'"
+      (click)="$event.stopPropagation()"  
+      >{{ 'PRIVACY_LINK' | translate }}</a
+    >
+    <span>{{ 'PRIVACY_SUFFIX' | translate }}</span>
+  </label>
+
+  <span class="field-msg" *ngIf="isError('privacy')">
+    {{ 'PRIVACY_REQUIRED' | translate }}
+  </span>
+</div>
+
 
       <button
         type="submit"

@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './impressum.component.html',
-  styleUrl: './impressum.component.scss',
+  styleUrls: ['./impressum.component.scss'],
 })
 export class ImpressumComponent {}

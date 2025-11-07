@@ -1,19 +1,11 @@
-import { Component, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Component, Inject, PLATFORM_ID, AfterViewInit, OnDestroy } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ScrollToTopComponent } from '../../components/scroll-to-top/scroll-to-top.component';
+import { filter, Subscription } from 'rxjs';
 
-/**
- * LayoutComponent
- *
- * Provides the global layout structure of the application including
- * header, footer, router outlet, and scroll-to-top behavior.
- * 
- * Additionally, it initializes the AOS (Animate On Scroll) library
- * only on the browser platform to enable entry animations.
- */
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -27,21 +19,19 @@ import { ScrollToTopComponent } from '../../components/scroll-to-top/scroll-to-t
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent implements AfterViewInit {
+export class LayoutComponent implements AfterViewInit, OnDestroy {
+  private sub?: Subscription;
 
-  /**
-   * Injects the current platform ID to conditionally execute browser-only code.
-   * @param platformId Angular's PLATFORM_ID token
-   */
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private doc: Document,
+    private router: Router
+  ) {}
 
-  /**
-   * Lifecycle hook that runs after the component’s view initialization.
-   * Initializes the AOS (Animate On Scroll) library only in the browser.
-   */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
 
+    // AOS as before
     const { default: AOS } = await import('aos');
     AOS.init({
       once: true,
@@ -50,7 +40,21 @@ export class LayoutComponent implements AfterViewInit {
       offset: 60,
       startEvent: 'DOMContentLoaded',
     });
-
     requestAnimationFrame(() => AOS.refresh());
+
+    // Tag <body> on legal routes to hide the fixed green line only there
+    this.sub = this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(e => {
+        const url = e.urlAfterRedirects || e.url;
+        const isLegal =
+          url.startsWith('/impressum') || url.startsWith('/datenschutz');
+
+        this.doc.body.classList.toggle('is-legal-page', isLegal);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 }

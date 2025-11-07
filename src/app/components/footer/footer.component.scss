@@ -2,6 +2,8 @@
   position: relative;
   display: flex;
   align-items: center;
+  max-width: var(--container-max);
+  margin-inline: auto;
   height: 291px;
   background: var(--background);
   color: var(--text);
@@ -35,6 +37,8 @@
   align-items: center;
   gap: clamp(12px, 3vw, 32px);
 }
+
+
 
 .footer__brand {
   justify-self: start;
@@ -128,4 +132,8 @@
   .footer__socials {
     justify-self: center;
   }
+}
+
+:host-context(.is-legal-page) .footer::before {
+  display: none;
 }

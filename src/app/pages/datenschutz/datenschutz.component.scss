@@ -4,7 +4,13 @@
   margin: auto;
   color: var(--text);
   line-height: 1.6;
-  background-color: #0f172a;
+  background-color: var(--background);
+  text-align:left;
+  overflow-wrap: break-word;
+}
+
+.privacy h1{
+  font-size: 24px;
 }
 
 .privacy h2 {

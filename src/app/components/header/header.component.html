@@ -1,49 +1,113 @@
 <header class="header">
   <div class="header__inner container">
-  <a href="#hero" (click)="navigate($event, 'hero')" aria-label="Home">
-    <app-logo></app-logo>
-  </a>
+    <a
+      routerLink="/"
+      fragment="hero"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeMenu()"
+      aria-label="Home"
+    >
+      <app-logo></app-logo>
+    </a>
 
-  <div class="right-group">
-    <!-- Desktop-Navigation -->
-    <nav class="nav">
-      <a href="#about" (click)="navigate($event, 'about')" [class.active]="activeSection==='about'">
-        {{ 'ABOUT_ME' | translate }}
-      </a>
-      <a href="#skills" (click)="navigate($event, 'skills')" [class.active]="activeSection==='skills'">
-        {{ 'SKILLS' | translate }}
-      </a>
-      <a href="#projects" (click)="navigate($event, 'projects')" [class.active]="activeSection==='projects'">
-        {{ 'PROJECTS' | translate }}
-      </a>
-    </nav>
+    <div class="right-group">
+      <!-- Desktop-Navigation -->
+      <nav class="nav">
+        <a
+          routerLink="/"
+          fragment="about"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          {{ "ABOUT_ME" | translate }}
+        </a>
 
-    <!-- Lang -->
-    <div class="lang-switch">
-      <button class="lang-btn" [class.active]="currentLang==='de'" (click)="switchLang('de')">DE</button>
-      <button class="lang-btn" [class.active]="currentLang==='en'" (click)="switchLang('en')">EN</button>
+        <a
+          routerLink="/"
+          fragment="skills"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          {{ "SKILLS" | translate }}
+        </a>
+
+        <a
+          routerLink="/"
+          fragment="projects"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          {{ "PROJECTS" | translate }}
+        </a>
+      </nav>
+
+      <!-- Lang -->
+      <div class="lang-switch">
+        <button
+          class="lang-btn"
+          [class.active]="currentLang === 'de'"
+          (click)="switchLang('de')"
+        >
+          DE
+        </button>
+        <button
+          class="lang-btn"
+          [class.active]="currentLang === 'en'"
+          (click)="switchLang('en')"
+        >
+          EN
+        </button>
+      </div>
+
+      <!-- Burger -->
+      <button
+        class="burger"
+        (click)="toggleMenu()"
+        [class.open]="isMenuOpen"
+        aria-label="Open menu"
+        [attr.aria-expanded]="isMenuOpen"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-    <!-- Burger -->
-    <button class="burger" (click)="toggleMenu()" [class.open]="isMenuOpen" aria-label="Open menu"
-            [attr.aria-expanded]="isMenuOpen">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+    <!-- Mobile Overlay -->
+    <div class="nav-overlay" [class.open]="isMenuOpen" (click)="closeMenu()">
+      <div class="menu" (click)="$event.stopPropagation()">
+        <a routerLink="/" fragment="about" (click)="closeMenu()">{{
+          "ABOUT_ME" | translate
+        }}</a>
+        <a routerLink="/" fragment="skills" (click)="closeMenu()">{{
+          "SKILLS" | translate
+        }}</a>
+        <a routerLink="/" fragment="projects" (click)="closeMenu()">{{
+          "PROJECTS" | translate
+        }}</a>
+        <a routerLink="/" fragment="contact" (click)="closeMenu()">{{
+          "CONTACT" | translate
+        }}</a>
 
-  <!-- Mobile Overlay -->
-  <div class="nav-overlay" [class.open]="isMenuOpen" (click)="closeMenu()">
-    <div class="menu" (click)="$event.stopPropagation()">
-      <a href="#about"    (click)="navigate($event, 'about'); closeMenu()">{{ 'ABOUT_ME' | translate }}</a>
-      <a href="#skills"   (click)="navigate($event, 'skills'); closeMenu()">{{ 'SKILLS' | translate }}</a>
-      <a href="#projects" (click)="navigate($event, 'projects'); closeMenu()">{{ 'PROJECTS' | translate }}</a>
-      <a href="#contact"  (click)="navigate($event, 'contact'); closeMenu()">{{ 'CONTACT' | translate }}</a>
-
-      <div class="langs">
-        <button class="lang-btn" [class.active]="currentLang==='en'" (click)="switchLang('en')">EN</button>
-        <button class="lang-btn" [class.active]="currentLang==='de'" (click)="switchLang('de')">DE</button>
+        <div class="langs">
+          <button
+            class="lang-btn"
+            [class.active]="currentLang === 'en'"
+            (click)="switchLang('en')"
+          >
+            EN
+          </button>
+          <button
+            class="lang-btn"
+            [class.active]="currentLang === 'de'"
+            (click)="switchLang('de')"
+          >
+            DE
+          </button>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </header>

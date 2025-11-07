@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 /**
  * FieldName
@@ -23,7 +24,7 @@ type FieldName = 'name' | 'email' | 'message' | 'privacy';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, RouterModule],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })

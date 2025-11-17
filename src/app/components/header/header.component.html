@@ -19,7 +19,7 @@
           fragment="about"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
+          (click)="scrollToSection($event, 'about')"
         >
           {{ "ABOUT_ME" | translate }}
         </a>
@@ -29,7 +29,7 @@
           fragment="skills"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
+          (click)="scrollToSection($event, 'skills')"
         >
           {{ "SKILLS" | translate }}
         </a>
@@ -39,7 +39,7 @@
           fragment="projects"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
+          (click)="scrollToSection($event, 'projects')"
         >
           {{ "PROJECTS" | translate }}
         </a>
@@ -78,16 +78,16 @@
     <!-- Mobile Overlay -->
     <div class="nav-overlay" [class.open]="isMenuOpen" (click)="closeMenu()">
       <div class="menu" (click)="$event.stopPropagation()">
-        <a routerLink="/" fragment="about" (click)="closeMenu()">{{
+        <a routerLink="/" fragment="about" (click)="scrollToSection($event, 'about')">{{
           "ABOUT_ME" | translate
         }}</a>
-        <a routerLink="/" fragment="skills" (click)="closeMenu()">{{
+        <a routerLink="/" fragment="skills" (click)="scrollToSection($event, 'skills')">{{
           "SKILLS" | translate
         }}</a>
-        <a routerLink="/" fragment="projects" (click)="closeMenu()">{{
+        <a routerLink="/" fragment="projects" (click)="scrollToSection($event, 'projects')">{{
           "PROJECTS" | translate
         }}</a>
-        <a routerLink="/" fragment="contact" (click)="closeMenu()">{{
+        <a routerLink="/" fragment="contact" (click)="scrollToSection($event, 'contact')">{{
           "CONTACT" | translate
         }}</a>
 

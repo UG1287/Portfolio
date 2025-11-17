@@ -1,11 +1,12 @@
 .hero {
   min-height: 100dvh;
+  width: 100%;
   display: grid;
   place-items: center;
   padding: clamp(16px, 3vw, 32px);
   position: relative;
   color: var(--text);
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   @supports (height: 100svh) {
     min-height: 100svh;
@@ -141,12 +142,11 @@
 
   .hero__decor {
     position: absolute;
-    top: 0;
+    top: 120px;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(100%, var(--container-max));
-    overflow: clip;
+    left: 0;
+    width: 100%;
+    overflow: visible;
     pointer-events: none;
     z-index: 1;
   }

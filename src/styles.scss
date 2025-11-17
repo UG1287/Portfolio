@@ -227,6 +227,11 @@ app-layout > main {
   flex: 1 0 auto;
 }
 
+h1, h2, h3 {
+  /* Kleiner Abstand zusätzlich (+8px) damit die Überschrift nicht direkt am Header klebt */
+  scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
 @supports not (height: 100dvh) {
   app-layout {
     min-height: 100vh;
@@ -236,5 +241,8 @@ app-layout > main {
 @media (max-width: 768px){
   main{
     min-height: calc(100dvh - var(--header-h-sm) - 291px);
+  }
+  h1, h2, h3 {
+    scroll-margin-top: calc(var(--header-h-sm) + 8px);
   }
 }

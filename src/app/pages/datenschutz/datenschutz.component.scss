@@ -1,5 +1,5 @@
 .privacy {
-  padding: 4rem 2rem;
+  padding: calc(var(--header-h, 72px) + 4rem) 2rem 4rem;
   max-width: 900px;
   margin: auto;
   color: var(--text);
@@ -7,16 +7,27 @@
   background-color: var(--background);
   text-align:left;
   overflow-wrap: break-word;
+  scroll-margin-top: calc(var(--header-h, 72px) + 1rem);
 }
 
 .privacy h1{
-  font-size: 24px;
+  font-size: 61px;
+  margin-bottom: 1rem;
+  color: var(--primary);
 }
 
 .privacy h2 {
   margin-bottom: 1rem;
+  color: var(--accent);
 }
 
 .privacy p {
   margin-bottom: 1rem;
+}
+
+@media (max-width: 704px) {
+  .privacy h1{
+    font-size: 24px;
+    line-height: 1.2;
+  }
 }

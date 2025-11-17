@@ -8,14 +8,15 @@ import { PLATFORM_ID } from '@angular/core';
 /**
  * HeaderComponent
  *
- * Represents the top navigation bar of the application.
- * Provides:
- * - Responsive menu toggle for mobile devices.
- * - Smooth section scrolling for in-page navigation.
- * - Language switching using ngx-translate.
+ * The application's top navigation bar.
+ *
+ * Responsibilities:
+ * - Mobile menu toggle including background scroll locking.
+ * - Smooth in-page section navigation.
+ * - Language switching through ngx-translate.
  * - Active section highlighting via IntersectionObserver.
  *
- * Ensures all DOM operations run safely only in the browser context.
+ * Includes SSR-safe guards to avoid DOM access when not running in the browser.
  */
 @Component({
   selector: 'app-header',
@@ -25,26 +26,28 @@ import { PLATFORM_ID } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements AfterViewInit, OnDestroy {
-  /** The ID of the currently active section in view. */
+  /** Stores the ID of the currently visible page section. */
   activeSection: string = '';
 
-  /** IntersectionObserver instance used for tracking visible sections. */
+  /** IntersectionObserver used to detect visible sections on scroll. */
   private io?: IntersectionObserver;
 
-  /** Indicates whether the mobile menu is currently open. */
+  /** Indicates whether the mobile navigation menu is opened. */
   isMenuOpen = false;
 
-  /** Currently selected language code (e.g., 'en' or 'de'). */
+  /** The currently active language code. */
   currentLang = this.translate.currentLang || 'de';
 
-  /** True if the component is executing in a browser environment. */
+  /** True only when running inside a browser environment. */
   private readonly isBrowser: boolean;
 
   /**
    * Creates an instance of HeaderComponent.
-   * @param translate The translation service for handling multilingual support.
-   * @param platformId Angular's platform identifier to detect SSR vs. browser runtime.
-   * @param doc The global Document object for DOM manipulation and scroll control.
+   * Injects translation service, platform info, and document reference.
+   *
+   * @param translate - Translation service from ngx-translate.
+   * @param platformId - Angular platform identifier for SSR/browser detection.
+   * @param doc - The global document object for DOM-based operations.
    */
   constructor(
     private translate: TranslateService,
@@ -55,8 +58,8 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Toggles the visibility of the mobile navigation menu.
-   * Prevents background scrolling when the menu is open.
+   * Toggles the mobile navigation menu.
+   * Adds or removes a scroll-locking class on the body element.
    */
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -66,7 +69,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Closes the mobile navigation menu and restores page scrolling.
+   * Closes the mobile menu and restores background scrolling.
    */
   closeMenu(): void {
     this.isMenuOpen = false;
@@ -75,12 +78,12 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  
-
   /**
-   * Lifecycle hook that initializes an IntersectionObserver
-   * to track which section of the page is currently visible.
-   * Updates `activeSection` accordingly for active-link highlighting.
+   * AfterViewInit lifecycle hook.
+   *
+   * Initializes an IntersectionObserver to monitor which sections
+   * are currently visible in the viewport. This enables highlighting
+   * the corresponding navigation link.
    */
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
@@ -107,33 +110,77 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Lifecycle hook that disconnects the IntersectionObserver
-   * when the component is destroyed to prevent memory leaks.
+   * OnDestroy lifecycle hook.
+   * Disconnects the IntersectionObserver to avoid memory leaks.
    */
   ngOnDestroy(): void {
     this.io?.disconnect();
   }
 
   /**
-   * Smoothly scrolls the viewport to the specified section.
-   * Prevents default link behavior and executes only in browser.
+   * Smoothly scrolls to a specific section of the page.
+   * Ensures safe browser execution and prevents default anchor behavior.
    *
-   * @param event - The triggering click event.
-   * @param id - The ID of the target DOM element.
+   * Features:
+   * - Closes mobile menu before scrolling.
+   * - Waits for layout to stabilize before calculating offsets.
+   * - Scrolls to the first heading inside the section if available.
+   * - Adjusts for sticky header height.
+   * - Updates the URL hash without triggering native scroll.
+   *
+   * @param event - The click event triggering the scroll.
+   * @param id - The ID of the target section element.
    */
   scrollToSection(event: Event, id: string): void {
     event.preventDefault();
+    event.stopPropagation();
+    try {
+      event.stopImmediatePropagation?.();
+    } catch {}
+
     if (!this.isBrowser) return;
 
-    const el = this.doc.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const section = this.doc.getElementById(id);
+    if (!section) {
+      this.closeMenu();
+      return;
+    }
+
+    this.closeMenu();
+
+    const win = this.doc.defaultView ?? window;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const heading = section.querySelector(
+          'h1, h2, h3'
+        ) as HTMLElement | null;
+        const target = heading ?? section;
+
+        const headerEl = this.doc.querySelector(
+          '.header'
+        ) as HTMLElement | null;
+        const headerHeight = headerEl?.offsetHeight ?? 0;
+
+        const currentScroll = win.scrollY ?? (win as any).pageYOffset ?? 0;
+
+        const targetTop =
+          target.getBoundingClientRect().top + currentScroll - headerHeight - 8;
+
+        win.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+
+        try {
+          win.history.replaceState(null, '', `#${id}`);
+        } catch {}
+      });
+    });
   }
 
   /**
-   * Switches the application language at runtime.
-   * Updates both the translation service and local state.
+   * Changes the active application language.
+   * Updates both the translate service and local state.
    *
-   * @param lang - The language code to switch to.
+   * @param lang - Language code to switch to.
    */
   switchLang(lang: string): void {
     this.translate.use(lang);

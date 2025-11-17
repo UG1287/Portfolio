@@ -2,18 +2,36 @@
   background: transparent;
   color: var(--text);
   padding-block: clamp(72px, 8vw, 120px);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
 .skills__inner {
   max-width: 1440px;
   margin: 0 auto;
   padding-inline: clamp(16px, 4vw, 40px);
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: clamp(24px, 6vw, 80px);
   align-items: start;
   grid-template-areas: "grid copy";
+}
+
+.skills__glow {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  width: 26%;
+  height: auto;
+  opacity: 0.95;
+  z-index: 0;
+}
+
+.skills__glow--left {
+  left: calc(50% - 50vw);
+  bottom: -37vw;
 }
 
 .skills__grid {

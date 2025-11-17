@@ -37,7 +37,7 @@ export class ProjectsComponent {
       descriptionKey: 'PROJECT_JOIN_DESC',
       stack: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'Firebase'],
       liveLink: '/apps/join/login.html',
-      repoLink: 'https://github.com/deinGithub/weather-app',
+      repoLink: 'https://github.com/UG1287/join',
     },
   ];
 }

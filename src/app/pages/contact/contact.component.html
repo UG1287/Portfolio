@@ -85,31 +85,28 @@
       </div>
 
       <div class="field field--privacy" [class.has-error]="isError('privacy')">
-  <!-- Input separat, mit for-Verbindung -->
-  <input
-    id="privacy"
-    type="checkbox"
-    formControlName="privacy"
-    (blur)="showErrorFor('privacy')"
-    (change)="showErrorFor('privacy')"
-    [attr.aria-invalid]="isError('privacy')"
-  />
+        <!-- Input separat, mit for-Verbindung -->
+        <input
+          id="privacy"
+          type="checkbox"
+          formControlName="privacy"
+          (blur)="showErrorFor('privacy')"
+          (change)="showErrorFor('privacy')"
+          [attr.aria-invalid]="isError('privacy')"
+        />
 
-  <label for="privacy" class="contact__privacy">
-    <span>{{ 'PRIVACY_PREFIX' | translate }}</span>
-    <a
-      [routerLink]="'/datenschutz'"
-      (click)="$event.stopPropagation()"  
-      >{{ 'PRIVACY_LINK' | translate }}</a
-    >
-    <span>{{ 'PRIVACY_SUFFIX' | translate }}</span>
-  </label>
+        <label for="privacy" class="contact__privacy">
+          <span>{{ "PRIVACY_PREFIX" | translate }}</span>
+          <a [routerLink]="'/datenschutz'" (click)="$event.stopPropagation()">{{
+            "PRIVACY_LINK" | translate
+          }}</a>
+          <span>{{ "PRIVACY_SUFFIX" | translate }}</span>
+        </label>
 
-  <span class="field-msg" *ngIf="isError('privacy')">
-    {{ 'PRIVACY_REQUIRED' | translate }}
-  </span>
-</div>
-
+        <span class="field-msg" *ngIf="isError('privacy')">
+          {{ "PRIVACY_REQUIRED" | translate }}
+        </span>
+      </div>
 
       <button
         type="submit"

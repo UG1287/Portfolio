@@ -1,16 +1,23 @@
 .legal {
-  padding: 4rem 2rem;
+  padding: calc(var(--header-h, 72px) + 4rem) 2rem 4rem;
   max-width: 900px;
   margin: auto;
   color: var(--text);
   line-height: 1.6;
   background-color: var(--background);
+  scroll-margin-top: calc(var(--header-h, 72px) + 1rem);
+}
+
+.legal h1 {
+  margin-bottom: 1rem;
+  color: var(--primary);
 }
 
 .legal h2 {
   margin-bottom: 1rem;
+  color: var(--accent);
 }
 
 .legal p {
-  margin-bottom: 1rem;
+  line-height: normal;
 }

@@ -27,7 +27,7 @@
       <div class="project__copy">
         <h3 class="project__name">{{ p.title }}</h3>
 
-        <div class="project__stack" *ngIf="p.stack?.length">
+        <div class="project__stack" *ngIf="p.stack.length">
           <span class="stack__item" *ngFor="let t of p.stack">{{ t }}</span>
         </div>
 

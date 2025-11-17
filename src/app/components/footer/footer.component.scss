@@ -2,22 +2,24 @@
   position: relative;
   display: flex;
   align-items: center;
-  max-width: var(--container-max);
+  width: 100%;
   margin-inline: auto;
   height: 291px;
   background: var(--background);
   color: var(--text);
-  overflow: hidden;
-  border-top: 4px solid var(--primary);
+  overflow: visible;
+  border-top: none;
   isolation: isolate;
 }
 
 .footer::before {
   content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: var(--footer-h);
+  
+  position: absolute;
+  top: 0;
+  left: 50%;
+  left: calc(50% - 50vw);
+  width: 100vw;
   height: 4px;
   background: var(--primary);
   z-index: 999;
@@ -128,12 +130,10 @@
   }
   .footer__copy {
     justify-self: center;
+    font-size: 12px;
   }
   .footer__socials {
     justify-self: center;
   }
 }
 
-:host-context(.is-legal-page) .footer::before {
-  display: none;
-}

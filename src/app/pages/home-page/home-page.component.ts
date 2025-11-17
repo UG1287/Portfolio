@@ -76,6 +76,6 @@ export class HomePageComponent implements AfterViewInit {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const el = this.doc.getElementById(sectionId);
-    el?.scrollIntoView({ behavior: 'smooth' });
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

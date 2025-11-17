@@ -9,13 +9,12 @@
 }
 
 .projects {
-  max-width: var(--container-max);
+  width: 100%;
   position: relative;
   background: transparent;
-  margin-inline: auto;
   color: var(--text);
   padding-block: clamp(72px, 8vw, 120px);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .projects__glow {
@@ -29,7 +28,7 @@
 }
 .projects__glow--left {
   left: -8vw;
-  top: 0;
+  top: 900px;
 }
 .projects__glow--right {
   right: -10vw;
@@ -37,7 +36,7 @@
 }
 
 .projects__inner {
-  max-width: 1440px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding-inline: clamp(16px, 4vw, 48px);
   position: relative;

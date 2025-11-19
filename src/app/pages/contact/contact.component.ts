@@ -53,7 +53,7 @@ export class ContactComponent {
   mailTest = false;
 
   /** Duration in milliseconds that an error message remains visible. */
-  private readonly ERROR_VISIBLE_MS = 5_000;
+  private readonly ERROR_VISIBLE_MS = 15_000;
 
   /** Tracks visibility timers for field-level validation errors. */
   private errorUntil: Partial<Record<FieldName, number>> = {};

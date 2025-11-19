@@ -42,8 +42,10 @@
 
 .skill {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   text-align: center;
 }
@@ -64,6 +66,9 @@
   height: clamp(46px, 5vw, 64px);
   transition: filter 0.25s ease;
   will-change: transform;
+  display: block;
+  object-fit: contain;
+  object-position: center;
 }
 
 .skill__tile:hover .skill__icon,
@@ -91,6 +96,7 @@
 }
 
 .skill__name {
+  margin-top: 8px;
   font-weight: 700;
   font-size: clamp(12px, 1.4vw, 14px);
   line-height: 1.2;
@@ -168,7 +174,7 @@
 .skills__title {
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 800;
-  font-size: clamp(32px, 5vw, 64px);
+  font-size: clamp(36px, 5vw, 64px);
   line-height: 1.05;
   margin: 0 0 14px;
   position: relative;
@@ -226,9 +232,9 @@
     justify-items: center;
   }
   .skills__copy .btn {
-    display: block;               /* margin auto works on block-level */
-    inline-size: fit-content;     /* shrink to content */
-    margin: 12px auto 0;          /* center horizontally */
+    display: block; 
+    inline-size: fit-content; 
+    margin: 12px auto 0;
   }
 }
 
@@ -240,15 +246,15 @@
     max-width: 220px;
   }
   .skills__copy .btn {
-    display: block;               /* margin auto works on block-level */
-    inline-size: fit-content;     /* shrink to content */
-    margin: 12px auto 0;          /* center horizontally */
+    display: block;
+    inline-size: fit-content;
+    margin: 12px auto 0;
   }
 }
 
 @media (max-width: 420px) {
   .skills__copy .btn {
     max-width: 100%;
-    text-align: center;           /* falls der Text umbrechen muss */
+    text-align: center;
   }
 }

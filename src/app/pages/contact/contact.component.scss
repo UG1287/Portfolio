@@ -56,7 +56,7 @@
   gap: clamp(14px, 2vw, 18px);
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 900;
-  font-size: clamp(40px, 7vw, 96px);
+  font-size: clamp(36px, 7vw, 64px);
   line-height: 1;
   margin: 0 0 clamp(8px, 1.4vw, 16px);
   position: relative;
@@ -95,6 +95,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px 0;
+  position: relative;
+  padding-bottom: calc(1.4rem + 12px);
 }
 
 .contact__privacy a {
@@ -172,6 +174,7 @@
   background: #121a29;
   color: var(--text);
   font-size: 16px;
+  font-family: inherit;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 
@@ -274,6 +277,7 @@
   background: var(--primary);
   color: #0b0f17;
   font-weight: 800;
+  font-size: 16px;
   border: 0;
   border-radius: 12px;
   padding: 14px 22px;
@@ -294,15 +298,40 @@
   filter: saturate(0.6);
 }
 
-.feedback {
-  margin-top: 8px;
+.form-feedback-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  pointer-events: none;
 }
 
-.feedback.success {
+.form-feedback {
+  font-size: 0.85rem;
+  line-height: 1.2;
+  font-weight: 600;
+  min-height: 1.4rem;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 120ms ease;
+  transform: translateY(4px);
+  text-align: left;
+  margin-top: 65px;
+}
+
+.form-feedback.is-visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.form-feedback--success {
   color: var(--primary);
 }
 
-.feedback.error {
+.form-feedback--error {
   color: #ff8a8a;
 }
 
@@ -316,6 +345,7 @@
     left: 0;
     right: 0;
     bottom: 6px;
+    padding-top: 6px;
     display: block;
     font-size: 0.85rem;
     color: #e61c40;

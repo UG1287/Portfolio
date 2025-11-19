@@ -1,5 +1,4 @@
 <section class="projects" id="projects">
-  <!-- optionale Deko-Glows (links/unten rechts) -->
   <img class="projects__glow projects__glow--left"  src="assets/shadows/Purpleshadowleft.svg" alt="" aria-hidden="true">
   <img class="projects__glow projects__glow--right" src="assets/shadows/Greenshadowright.svg" alt="" aria-hidden="true">
 
@@ -13,7 +12,6 @@
       [class.row--reverse]="i % 2 === 1"
       data-aos="fade-up"
     >
-      <!-- Bild / Mockup -->
       <div class="project__media">
         <img
           [src]="p.image"
@@ -23,7 +21,6 @@
         />
       </div>
 
-      <!-- Textseite -->
       <div class="project__copy">
         <h3 class="project__name">{{ p.title }}</h3>
 

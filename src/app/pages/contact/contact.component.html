@@ -108,6 +108,21 @@
         </span>
       </div>
 
+      <input
+        id="honeypot"
+        type="text"
+        formControlName="honeypot"
+        style="display: none"
+      />
+
+      <div class="form-feedback-wrap" aria-live="polite" aria-atomic="true">
+    <div class="form-feedback form-feedback--success" [class.is-visible]="submitted && !errorMessage">
+      {{ "MESSAGE_SENT" | translate }}
+    </div>
+    <div class="form-feedback form-feedback--error" [class.is-visible]="!!errorMessage">
+      {{ "MESSAGE_ERROR" | translate }}
+    </div>
+  </div>
       <button
         type="submit"
         class="contact__submit"
@@ -116,15 +131,6 @@
         <ng-container *ngIf="!sending">{{ "SEND" | translate }}</ng-container>
         <ng-container *ngIf="sending">{{ "SENDING" | translate }}</ng-container>
       </button>
-
-      <input type="text" formControlName="honeypot" style="display: none" />
-
-      <div class="feedback success" *ngIf="submitted && !errorMessage">
-        {{ "MESSAGE_SENT" | translate }}
-      </div>
-      <div class="feedback error" *ngIf="!!errorMessage">
-        {{ "MESSAGE_ERROR" | translate }}
-      </div>
     </form>
   </div>
 </section>

@@ -86,7 +86,7 @@ h2 {
   margin: 0;
 }
 p {
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-size: clamp(16px, 1.6vw, 18px);
   line-height: 1.55;
 }
 
@@ -95,7 +95,7 @@ p {
   outline-offset: 2px;
 }
 
-/* Medien */
+/* Media */
 img,
 svg {
   max-width: 100%;
@@ -120,6 +120,8 @@ svg {
   color: #fff;
   font-weight: 700;
   text-decoration: none;
+  font-family: inherit;
+  font-size: 16px;
 
   box-shadow: var(--btn-shadow);
   cursor: pointer;
@@ -173,12 +175,12 @@ svg {
 .btn--sm {
   --btn-py: 0.55rem;
   --btn-px: 1rem;
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 .btn--lg {
   --btn-py: 1rem;
   --btn-px: 2rem;
-  font-size: 1.05rem;
+  font-size: 23px;
 }
 
 /* ===========================

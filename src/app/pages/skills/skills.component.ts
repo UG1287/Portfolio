@@ -41,6 +41,7 @@ export class SkillsComponent {
     { name: 'Git', icon: 'assets/icons/git.png' },
     { name: 'Scrum', icon: 'assets/icons/scrum.png' },
     { name: 'Material Design', icon: 'assets/icons/material_design.png' },
+    { name: 'AI', icon: 'assets/icons/ai.png' },
     {
       name: 'Continually Learning',
       icon: 'assets/icons/continually_learning.png',

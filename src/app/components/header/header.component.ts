@@ -118,63 +118,66 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Smoothly scrolls to a specific section of the page.
-   * Ensures safe browser execution and prevents default anchor behavior.
-   *
-   * Features:
-   * - Closes mobile menu before scrolling.
-   * - Waits for layout to stabilize before calculating offsets.
-   * - Scrolls to the first heading inside the section if available.
-   * - Adjusts for sticky header height.
-   * - Updates the URL hash without triggering native scroll.
-   *
-   * @param event - The click event triggering the scroll.
-   * @param id - The ID of the target section element.
-   */
-  scrollToSection(event: Event, id: string): void {
-    event.preventDefault();
-    event.stopPropagation();
-    try {
-      event.stopImmediatePropagation?.();
-    } catch {}
+ * Smoothly scrolls to a specific section of the page.
+ * Ensures safe browser execution and prevents default anchor behavior.
+ *
+ * Features:
+ * - Closes mobile menu before scrolling.
+ * - Waits for layout to stabilize before calculating offsets.
+ * - Scrolls to the first heading inside the section if available.
+ * - Adjusts for sticky header height.
+ * - For the 'about' section, applies additional offset to prevent portrait clipping.
+ * - Updates the URL hash without triggering native scroll.
+ *
+ * @param event - The click event triggering the scroll.
+ * @param id - The ID of the target section element.
+ */
+scrollToSection(event: Event, id: string): void {
+  event.preventDefault();
+  event.stopPropagation();
+  try {
+    event.stopImmediatePropagation?.();
+  } catch {}
 
-    if (!this.isBrowser) return;
+  if (!this.isBrowser) return;
 
-    const section = this.doc.getElementById(id);
-    if (!section) {
-      this.closeMenu();
-      return;
-    }
-
+  const section = this.doc.getElementById(id);
+  if (!section) {
     this.closeMenu();
-
-    const win = this.doc.defaultView ?? window;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const heading = section.querySelector(
-          'h1, h2, h3'
-        ) as HTMLElement | null;
-        const target = heading ?? section;
-
-        const headerEl = this.doc.querySelector(
-          '.header'
-        ) as HTMLElement | null;
-        const headerHeight = headerEl?.offsetHeight ?? 0;
-
-        const currentScroll = win.scrollY ?? (win as any).pageYOffset ?? 0;
-
-        const targetTop =
-          target.getBoundingClientRect().top + currentScroll - headerHeight - 8;
-
-        win.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-
-        try {
-          win.history.replaceState(null, '', `#${id}`);
-        } catch {}
-      });
-    });
+    return;
   }
+
+  this.closeMenu();
+
+  const win = this.doc.defaultView ?? window;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const heading = section.querySelector(
+        'h1, h2, h3'
+      ) as HTMLElement | null;
+      const target = heading ?? section;
+
+      const headerEl = this.doc.querySelector(
+        '.header'
+      ) as HTMLElement | null;
+      const headerHeight = headerEl?.offsetHeight ?? 0;
+
+      const additionalOffset = id === 'about' ? 200 : 15;
+
+      const currentScroll = win.scrollY ?? (win as any).pageYOffset ?? 0;
+
+      const targetTop =
+        target.getBoundingClientRect().top + currentScroll - headerHeight - additionalOffset;
+
+      win.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+
+      try {
+        win.history.replaceState(null, '', `#${id}`);
+      } catch {}
+    });
+  });
+}
 
   /**
    * Changes the active application language.

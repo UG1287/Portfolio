@@ -177,6 +177,10 @@
   .about__curve--visual {
     display: block;
     bottom: calc(-2.6 * var(--curve-offset));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: none;
   }
 }
 

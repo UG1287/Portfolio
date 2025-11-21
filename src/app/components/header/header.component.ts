@@ -55,6 +55,13 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     @Inject(DOCUMENT) private doc: Document
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+    const savedLang = localStorage.getItem('language');
+    if (savedLang) {
+      this.translate.use(savedLang);
+      this.currentLang = savedLang;
+    }
+  }
   }
 
   /**
@@ -126,7 +133,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
  * - Waits for layout to stabilize before calculating offsets.
  * - Scrolls to the first heading inside the section if available.
  * - Adjusts for sticky header height.
- * - For the 'about' section, applies additional offset to prevent portrait clipping.
+ * - For the 'about' section, applies additional offset (only on desktop).
  * - Updates the URL hash without triggering native scroll.
  *
  * @param event - The click event triggering the scroll.
@@ -163,7 +170,9 @@ scrollToSection(event: Event, id: string): void {
       ) as HTMLElement | null;
       const headerHeight = headerEl?.offsetHeight ?? 0;
 
-      const additionalOffset = id === 'about' ? 200 : 15;
+      // Zusätzlicher Offset für About-Section nur auf Desktop (> 1200px)
+      const isDesktop = win.innerWidth > 1200;
+      const additionalOffset = id === 'about' && isDesktop ? 200 : 15;
 
       const currentScroll = win.scrollY ?? (win as any).pageYOffset ?? 0;
 
@@ -179,14 +188,18 @@ scrollToSection(event: Event, id: string): void {
   });
 }
 
-  /**
-   * Changes the active application language.
-   * Updates both the translate service and local state.
-   *
-   * @param lang - Language code to switch to.
-   */
-  switchLang(lang: string): void {
-    this.translate.use(lang);
-    this.currentLang = lang;
+/**
+ * Changes the active application language.
+ * Updates both the translate service and local state.
+ * Saves the language preference to localStorage.
+ *
+ * @param lang - Language code to switch to.
+ */
+switchLang(lang: string): void {
+  this.translate.use(lang);
+  this.currentLang = lang;
+  
+  if (this.isBrowser) {
+    localStorage.setItem('language', lang);
   }
-}
+}}

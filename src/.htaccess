@@ -13,9 +13,40 @@ DirectoryIndex index.html
 RewriteBase /
 
 # -----------------------------------------
+# MIME-Types explizit setzen (WICHTIG!)
+# -----------------------------------------
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType application/json .json
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+  AddType image/png .png
+  AddType image/jpeg .jpg .jpeg
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+</IfModule>
+
+# -----------------------------------------
+# Content-Type Header für JS/CSS forcieren (VOR den Rewrites!)
+# -----------------------------------------
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js)$">
+    Header set Content-Type "application/javascript"
+    Header set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+  <FilesMatch "\.(css)$">
+    Header set Content-Type "text/css"
+    Header set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+  <FilesMatch "\.(ttf|otf|eot|woff|woff2|svg)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+# -----------------------------------------
 # Favicon-Fallback (vermeidet 404/500)
-# Falls du kein /favicon.ico im Root hast,
-# leite auf dein Assets-Favicon um.
 # -----------------------------------------
 RewriteCond %{REQUEST_URI} ^/favicon\.ico$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -23,29 +54,28 @@ RewriteRule ^favicon\.ico$ /assets/favicon.ico [L]
 
 # -----------------------------------------
 # SPA-Rewrite:
-# 1) PHP/Backends explizit NICHT umschreiben
-# 2) Echte Dateien/Ordner normal ausliefern
-# 3) Rest auf index.html umschreiben
+# WICHTIG: Asset-Dateien ZUERST prüfen!
 # -----------------------------------------
-# (Liste ggf. erweitern, falls du weitere Endpoints hast)
+
+# Backend-Endpoints nicht umschreiben
 RewriteCond %{REQUEST_URI} ^/sendMail\.php$ [NC]
 RewriteRule ^ - [L]
 
+# JS-Dateien EXPLIZIT nicht umschreiben (höchste Priorität!)
+RewriteCond %{REQUEST_URI} ^.*\.js$ [NC]
+RewriteRule ^ - [L]
+
+# Weitere Asset-Dateien nicht umschreiben
+RewriteCond %{REQUEST_URI} \.(css|json|jpg|jpeg|png|gif|svg|webp|woff|woff2|ttf|otf|eot|ico|map)$ [NC]
+RewriteRule ^ - [L]
+
+# Echte Dateien und Ordner nicht umschreiben
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # Alles andere an Angular übergeben
 RewriteRule . /index.html [L]
-
-# -----------------------------------------
-# CORS für Fonts/SVGs (CDN/Preload freundlich)
-# -----------------------------------------
-<IfModule mod_headers.c>
-  <FilesMatch "\.(ttf|otf|eot|woff|woff2|svg)$">
-    Header set Access-Control-Allow-Origin "*"
-  </FilesMatch>
-</IfModule>
 
 # -----------------------------------------
 # Caching
